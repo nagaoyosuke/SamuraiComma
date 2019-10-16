@@ -10,8 +10,10 @@ public class ScreenFader : MonoBehaviour {
 
 	public bool isFadeOut = false;  //フェードアウト処理の開始、完了を管理するフラグ
 	public bool isFadeIn = false;   //フェードイン処理の開始、完了を管理するフラグ
+    public bool isFadeOutTranslucent = false; //半透明にフェードアウト
 
-	Image fadeImage;                //透明度を変更するパネルのイメージ
+
+    Image fadeImage;                //透明度を変更するパネルのイメージ
 
 	void Start () {
 		fadeImage = GetComponent<Image> ();
@@ -29,6 +31,11 @@ public class ScreenFader : MonoBehaviour {
 		if (isFadeOut) {
 			StartFadeOut ();
 		}
+
+        if (isFadeOutTranslucent){
+            StartFadeOutTranslucent();
+        }
+
 	}
 
 	void StartFadeIn(){
@@ -49,7 +56,17 @@ public class ScreenFader : MonoBehaviour {
 		}
 	}
 
-	void SetAlpha(){
+    void StartFadeOutTranslucent(){
+        fadeImage.enabled = true;  // a)パネルの表示をオンにする
+        alfa += fadeSpeed;         // b)不透明度を徐々にあげる
+        SetAlpha ();               // c)変更した透明度をパネルに反映する
+        if(alfa >= 0.5f){             // d)完全に不透明になったら処理を抜ける
+            isFadeOutTranslucent = false;
+        }
+    }
+
+
+    void SetAlpha(){
 		fadeImage.color = new Color(red, green, blue, alfa);
 	}
 }

@@ -14,25 +14,8 @@ public class MySceneManager : SingletonMonoBehaviour<MySceneManager> {
         SceneManager.LoadScene("Main");
     }
 
-    public static void GoMenu()
-    {
-        SceneManager.LoadScene("Menu");
-    }
-
-	public static void GoTutorial(){
-		SceneManager.LoadScene("Tutorial");
-	}
-
 	public static void GoResult(){
 		SceneManager.LoadScene("Result");
-	}
-
-	public static void GoModeSelect(){
-		SceneManager.LoadScene("ModeSelect");
-	}
-
-	public static void GoCredit(){
-		SceneManager.LoadScene("Credit");
 	}
 
 	public static void GoExplanatoryText(){
