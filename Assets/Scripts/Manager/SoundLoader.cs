@@ -78,6 +78,16 @@ public class SoundLoader : MonoBehaviour {
         Sound.LoadBgm("Result2", "Result2(Slow)");
         Sound.LoadBgm("Result3", "Result2(Fast)");
         Sound.LoadBgm("Result4", "Result3");
+        //20191031
+        //https://taira-komori.jpn.org/nature01.html
+        /*
+        規約は、はっきり言ってゆるゆるです。
+
+        動画・音楽・ゲーム・アプリ・演劇・朗読・公演・ウェブサイト・放送・教育・研究・企業活動などのあらゆる目的の使用OK
+
+        ファイルの加工・変換OK／商用利用ＯＫ／製品への組込みＯＫ／作品内容の制限一切無し／事前事後の連絡不要／著作表示やリンクも不要／海外向け作品での使用ＯＫ
+        */
+        Sound.LoadBgm("wind", "wind");
 
     }
 }
