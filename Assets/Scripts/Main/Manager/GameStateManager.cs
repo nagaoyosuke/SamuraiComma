@@ -18,7 +18,7 @@ namespace SamuraiComma.Main.Manager
     class GameStateManager : MonoBehaviour
     {
 
-        private ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Direction);
+        public ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Initializing);
         public IReadOnlyReactiveProperty<GameState> CurrentGameState => _gameState;
 
         [SerializeField] private ObservablePrepareTimelineTrigger _prepareTimelineTrigger;
@@ -26,6 +26,8 @@ namespace SamuraiComma.Main.Manager
         [SerializeField] private ObservableVictoryTimelineTrigger _victoryTimelineTrigger;
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
+
+        [SerializeField] private TempData tempData;
 
         private void Start()
         {
@@ -39,15 +41,23 @@ namespace SamuraiComma.Main.Manager
             */
 
             //サーバーからデータが送られてきたらdirectionの処理
+            tempData.tempdataflag
+                    .DistinctUntilChanged()
+                    .Where(x => x == true)
+                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
 
             //directionの演出が終わったら waitingsignal
-               _prepareTimelineTrigger.isFinishedDirection
+            _prepareTimelineTrigger.isFinishedDirection
                                       .DistinctUntilChanged()
                                       .Where(x => x == true)
                                       .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.WaitingSignal));
 
             //aボタンが押されたら　gamestate.battle
+                //.Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
+
             //ネットで処理がなされて、データが帰ってきたら .finished
+                //.Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
+
             //アニメーション終了後 result
         }
     }

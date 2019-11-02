@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//仮
 public class SetsunaSignal : MonoBehaviour
 {   
     [SerializeField]
@@ -19,21 +20,9 @@ public class SetsunaSignal : MonoBehaviour
     //早く押しすぎの場合
     private bool isQuicklyPush;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        isFinishedDirection = true;
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (isFinishedDirection)
-        {
-            isFinishedDirection = false;
-            StartCoroutine(Until());
-        }
 
         if (isDisplaySignal)
         {
@@ -48,20 +37,18 @@ public class SetsunaSignal : MonoBehaviour
             }
         }
 
-        if (!isDisplaySignal && !isQuicklyPush)
-          {
-                if (Input.anyKeyDown)
-                {
-                    print("お手つき");
-                battle.BeBeaten();
-                isQuicklyPush = true;
-                }
-
-            }
         }
 
-    private IEnumerator Until(){
-        float untilShowSignalTime = Random.Range(4.0f, 8.0f);
+    public IEnumerator Until(float time){
+        /*
+        if (!isDisplaySignal && !isQuicklyPush)
+        {
+            battle.BeBeaten();
+            isQuicklyPush = true;
+        }
+        */
+
+        float untilShowSignalTime = time;
         yield return new WaitForSeconds(untilShowSignalTime);
         if (!isQuicklyPush)
         {

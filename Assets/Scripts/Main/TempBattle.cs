@@ -35,6 +35,7 @@ public class TempBattle : MonoBehaviour
 
     }
 
+
     public void BeBeaten(){
         opponentUnityChanAnimation.PlayAnimation("isAttack");
         StartCoroutine(DelayClass.DelayCoroutin(80, () => unityChanAnimation.PlayAnimation("isDamaged")));

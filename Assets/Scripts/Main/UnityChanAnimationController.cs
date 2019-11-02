@@ -16,11 +16,6 @@ public class UnityChanAnimationController : MonoBehaviour
         animator = this.gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void PlayAnimation(string key){
         animator.SetBool(key, true);
         StartCoroutine(DelayClass.DelayCoroutin(1, () => animator.SetBool(key, false)));
