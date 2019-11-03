@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using SamuraiComma.Main.Camera;
+using SamuraiComma.Main.Player;
 using Zenject;
 using UnityEngine.Timeline;
 using UnityEngine.Assertions;
@@ -24,12 +25,12 @@ namespace SamuraiComma.Main.Manager
         [SerializeField] private ObservablePrepareTimelineTrigger _prepareTimelineTrigger;
         [SerializeField] private ObservableFixTimelineTrigger _fixTimelineTrigger;
         [SerializeField] private ObservableVictoryTimelineTrigger _victoryTimelineTrigger;
+        [SerializeField] private PlayerState _playerState;
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
 
         //仮
         [SerializeField] private TempData tempData;
-        [SerializeField] private SetsunaSignal signal;
 
         private void Start()
         {
@@ -47,7 +48,7 @@ namespace SamuraiComma.Main.Manager
                   .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.WaitingSignal));
 
             //aボタンが押されたら　gamestate.battle
-            signal.battleenumflag
+            _playerState.canBattle
                   .DistinctUntilChanged()
                   .Where(x => x == true)
                   .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));

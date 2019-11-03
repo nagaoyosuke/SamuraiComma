@@ -17,31 +17,44 @@ namespace SamuraiComma.Main.Player
     public class PlayerQuickDrawer : MonoBehaviour
     {
 
-        [SerializeField] private IInputProvider _inputProvider;
+        [SerializeField] private KeyboardInputProvider _inputProvider;
         [SerializeField] private PlayerState _playerState;
+        [SerializeField] private ScreenFader screenFader;
+        [SerializeField] private readonly int _otetsukiTime = 2;
         [Inject] private GameStateManager _gameStateManager;
+        [Inject] private TimeManager _timeManager;
+
+        private BoolReactiveProperty _canBattle = new BoolReactiveProperty(false);
+        public IReadOnlyReactiveProperty<bool> canBattle => _canBattle;
+
         //仮
         [SerializeField] private TempBattle temp;
-        private bool tempFlag;
 
         private void Start()
         {
             this.UpdateAsObservable()
-                .Where(_ => (_gameStateManager.CurrentGameState.Value == GameState.WaitingSignal) && (_inputProvider.enterTrigger.Value))
+                .Where(_ =>
+                       (_gameStateManager.CurrentGameState.Value == GameState.WaitingSignal)
+                       && (_inputProvider.enterTrigger.Value) 
+                       && (_playerState.canQuickDraw.Value))
                 .Subscribe(_ => QuickDraw());
         }
 
         private void QuickDraw()
         {
-            if (!tempFlag)//もしも、合図がでてないのに剣を抜いたら
-            {
-                _playerState.canQuickDraw.Value = false;
-                StartCoroutine(DelayClass.DelayCoroutin(180, () => _playerState.canQuickDraw.Value = true));
+            _playerState.canQuickDraw.Value = false;
+
+            if (_timeManager.signalTimer.Value <= 0){
+                Sound.PlaySe("syakin");
+                screenFader.isFadeOutTranslucent = true;
+                temp.setsunaButton.SetActive(true);
+                _playerState.canBattle.Value = true;
 
             } else {
-                //仮
-                temp.OnClickedTempButton();
+                StartCoroutine(DelayClass.DelayCoroutin(60*_otetsukiTime, () => _playerState.canQuickDraw.Value = true));
             }
+
+
         }
 
     }

@@ -30,9 +30,6 @@ public class TempBattle : MonoBehaviour
         StartCoroutine(DelayClass.DelayCoroutin(80, () => opponentUnityChanAnimation.PlayAnimation("isDamaged")));
         StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
         StartCoroutine(DelayClass.DelayCoroutin(150, () => winImage.enabled = true));
-
-
-
     }
 
 

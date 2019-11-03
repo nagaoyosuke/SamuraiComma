@@ -10,11 +10,10 @@ namespace SamuraiComma.Main.Player
     /// プレイヤーの状態
     /// </summary>
 
-    public class PlayerState : MonoBehaviour
+    public class PlayerState : MonoBehaviour    
     {
         [SerializeField] public BoolReactiveProperty canQuickDraw = new BoolReactiveProperty(true);
-        //public IReadOnlyReactiveProperty<bool> canQuickDraw => _canQuickDraw;
-        //[SerializeField] private BoolReactiveProperty _is
+        [SerializeField] public BoolReactiveProperty canBattle = new BoolReactiveProperty(false);
 
     }
 }

@@ -16,10 +16,9 @@ namespace SamuraiComma.Main.UI
 
     public class DisplayTrajectoryTime : MonoBehaviour
     {
-
-        [Inject] private TrajectoryTimeLimitCounter _timeCounter;
-        [Inject] private GameStateManager _gameStateManager;
         [SerializeField] private Text _timeLimitText;
+        [Inject] private TimeManager _timeCounter;
+        [Inject] private GameStateManager _gameStateManager;
 
         private void Start()
         {
@@ -29,11 +28,11 @@ namespace SamuraiComma.Main.UI
                              .FirstOrDefault(x => x == GameState.Battle)
                              .Subscribe(_ => _timeLimitText.enabled = true); 
 
-            _timeCounter.signalTimer
+            _timeCounter.trajectoryTimer
                         .DistinctUntilChanged()
                         .Subscribe(time => _timeLimitText.text = time.ToString("0.00"));
 
-            _timeCounter.signalTimer
+            _timeCounter.trajectoryTimer
                         .SkipLatestValueOnSubscribe()
                         .DistinctUntilChanged()
                         .Where(x => x <= 0)
