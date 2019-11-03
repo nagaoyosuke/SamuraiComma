@@ -11,10 +11,9 @@ public class TempData : MonoBehaviour
 {
 
     [Inject] private GameStateManager _manager;
-    public float tempSignalLimitTime = 5.0f;
     public string tempName = "けんた";
     public int tempRate = 2512;
-    public float signalTime;
+    private float signalTime;
 
     public BoolReactiveProperty tempdataflag =  new BoolReactiveProperty(false);
     public SetsunaSignal tempSignal;
@@ -23,7 +22,7 @@ public class TempData : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        signalTime = Random.RandomRange(5.0f, 15.0f);
+        signalTime = Random.RandomRange(1.0f, 2.0f);
         StartCoroutine(DelayClass.DelayCoroutin(180,() => tempdataflag.Value = true));
     }
 

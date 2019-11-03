@@ -18,7 +18,7 @@ namespace SamuraiComma.Main.Manager
     class GameStateManager : MonoBehaviour
     {
 
-        public ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Initializing);
+        public ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Direction);
         public IReadOnlyReactiveProperty<GameState> CurrentGameState => _gameState;
 
         [SerializeField] private ObservablePrepareTimelineTrigger _prepareTimelineTrigger;
@@ -27,36 +27,33 @@ namespace SamuraiComma.Main.Manager
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
 
+        //仮
         [SerializeField] private TempData tempData;
+        [SerializeField] private SetsunaSignal signal;
 
         private void Start()
         {
-            /*
-            スクリプトで生成してもなぜか再生終了時に自動でdestoryされる別のassetが生成、再生される
-            var track = _timelineSwitcher.prepareDirectionPlayableAsset as TimelineAsset;
-            TrackAsset controlTrack = track.GetOutputTracks().First(c => c.name.Equals("Control Track"));
-            var controlPlayableAsset = controlTrack.GetClips().First(c => c.displayName == "PrepareDirectionControllTrack").asset as ControlPlayableAsset;
-            //var trigger = controlPlayableAsset.prefabGameObject.GetComponent(typeof(ITimeControl)) as ITimeControl;
-            a = controlPlayableAsset.prefabGameObject.GetComponent<ObservablePrepareTimelineTrigger>();
-            */
 
             //サーバーからデータが送られてきたらdirectionの処理
             tempData.tempdataflag
-                    .DistinctUntilChanged()
-                    .Where(x => x == true)
-                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
+                  .DistinctUntilChanged()
+                  .Where(x => x == true)
+                  .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
 
             //directionの演出が終わったら waitingsignal
             _prepareTimelineTrigger.isFinishedDirection
-                                      .DistinctUntilChanged()
-                                      .Where(x => x == true)
-                                      .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.WaitingSignal));
+                  .DistinctUntilChanged()
+                  .Where(x => x == true)
+                  .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.WaitingSignal));
 
             //aボタンが押されたら　gamestate.battle
-                //.Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
+            signal.battleenumflag
+                  .DistinctUntilChanged()
+                  .Where(x => x == true)
+                  .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
 
             //ネットで処理がなされて、データが帰ってきたら .finished
-                //.Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
+            //.Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
 
             //アニメーション終了後 result
         }

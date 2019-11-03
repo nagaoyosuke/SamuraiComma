@@ -35,20 +35,15 @@ namespace SamuraiComma.Main.Manager
                              .FirstOrDefault(x => x == GameState.Direction)
                              .Subscribe(_ =>
             {
-                /*
-                _playableDirector.gameObject.SetActive(false);
-                _playableDirector.playableAsset = _prepareDirectionPlayableAsset;
-                _playableDirector.gameObject.SetActive(true);
-                */
                 _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset);
             });
+
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.WaitingSignal)
                              .Subscribe(_ =>
             {
                 _fixPlayableDirector.Play(_fixPlayableDirector.playableAsset);
-
             });
 
             _gameStateManager.CurrentGameState
@@ -56,7 +51,6 @@ namespace SamuraiComma.Main.Manager
                              .Subscribe(_ =>
              {
                 _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset);
-
              });
 
 

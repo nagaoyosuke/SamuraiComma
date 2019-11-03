@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 //仮
 public class SetsunaSignal : MonoBehaviour
@@ -20,6 +21,8 @@ public class SetsunaSignal : MonoBehaviour
     //早く押しすぎの場合
     private bool isQuicklyPush;
 
+    public BoolReactiveProperty battleenumflag = new BoolReactiveProperty(false);
+
     // Update is called once per frame
     void Update()
     {
@@ -34,19 +37,13 @@ public class SetsunaSignal : MonoBehaviour
                 Sound.PlaySe("syakin");
                 battle.setsunaButton.SetActive(true);
                 screenFader.isFadeOutTranslucent = true;
+                battleenumflag.Value = true;
             }
         }
 
         }
 
     public IEnumerator Until(float time){
-        /*
-        if (!isDisplaySignal && !isQuicklyPush)
-        {
-            battle.BeBeaten();
-            isQuicklyPush = true;
-        }
-        */
 
         float untilShowSignalTime = time;
         yield return new WaitForSeconds(untilShowSignalTime);
