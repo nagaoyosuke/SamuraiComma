@@ -37,6 +37,8 @@ namespace SamuraiComma.Main.UI
                         .DistinctUntilChanged()
                         .Where(x => x <= 0)
                         .Subscribe(_ => _timeLimitText.enabled = false);
+
+            //ジョイコンで斬れたら非表示にする処理
         }
 
     }

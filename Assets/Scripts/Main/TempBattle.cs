@@ -7,13 +7,11 @@ using UnityEngine.UI;
 public class TempBattle : MonoBehaviour
 {
     public GameObject setsunaButton;
-    [SerializeField]
-    private Image winImage;
-    public Image loseImage;
     public UnityChanAnimationController unityChanAnimation;
     public UnityChanAnimationController opponentUnityChanAnimation;
 
     public ScreenFader screenFader;
+    public TempData temp;
 
 
     // Start is called before the first frame update
@@ -26,18 +24,20 @@ public class TempBattle : MonoBehaviour
         Sound.PlaySe("hero01");
         screenFader.isFadeIn = true;//連打するとフェイドインされないバグ
         setsunaButton.SetActive(false);
-        unityChanAnimation.PlayAnimation("isAttack");
-        StartCoroutine(DelayClass.DelayCoroutin(80, () => opponentUnityChanAnimation.PlayAnimation("isDamaged")));
-        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
-        StartCoroutine(DelayClass.DelayCoroutin(150, () => winImage.enabled = true));
+
+        temp.TempServer(1*60);
+        temp.TempServer(5*60);
     }
 
 
     public void BeBeaten(){
+        unityChanAnimation.PlayAnimation("isAttack");
+        StartCoroutine(DelayClass.DelayCoroutin(80, () => opponentUnityChanAnimation.PlayAnimation("isDamaged")));
+        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
+
         opponentUnityChanAnimation.PlayAnimation("isAttack");
         StartCoroutine(DelayClass.DelayCoroutin(80, () => unityChanAnimation.PlayAnimation("isDamaged")));
         StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
-        StartCoroutine(DelayClass.DelayCoroutin(150, () => loseImage.enabled = true));
 
     }
 }

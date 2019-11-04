@@ -14,13 +14,18 @@ public class TempData : MonoBehaviour
     public string tempName = "けんた";
     public int tempRate = 2512;
 
-    //サーバーからでーたをもらったらtrueになる(仮)
-    public BoolReactiveProperty tempdataflag =  new BoolReactiveProperty(false);
+    //サーバーにデータを送る/もらうまでの間はtrueになる(仮)
+    public BoolReactiveProperty tempserverflag =  new BoolReactiveProperty(false);
 
 
     private void Start()
     {
-        StartCoroutine(DelayClass.DelayCoroutin(180,() => tempdataflag.Value = true));
-        StartCoroutine(DelayClass.DelayCoroutin(182, () => tempdataflag.Value = false));
+        TempServer(1 * 60);
+        TempServer(5 * 60);
+
+    }
+
+    public void TempServer(int sec){
+        StartCoroutine(DelayClass.DelayCoroutin(sec, () => tempserverflag.Value = !tempserverflag.Value));
     }
 }

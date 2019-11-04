@@ -15,7 +15,6 @@ namespace SamuraiComma.Main.Manager
 
     public class TimelineSwitcher : MonoBehaviour
     {
-
         [SerializeField] private PlayableDirector _preparePlayableDirector;
         [SerializeField] private PlayableDirector _fixPlayableDirector;
         [SerializeField] private PlayableDirector _victoryPlayableDirector;
@@ -26,33 +25,21 @@ namespace SamuraiComma.Main.Manager
 
         [Inject] private GameStateManager _gameStateManager;
 
-
         private void Start()
         {
-
             //演出タイムなら、演出用タイムラインを再生する。
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Direction)
-                             .Subscribe(_ =>
-            {
-                _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset);
-            });
+                             .Subscribe(_ => _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset));
 
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.WaitingSignal)
-                             .Subscribe(_ =>
-            {
-                _fixPlayableDirector.Play(_fixPlayableDirector.playableAsset);
-            });
+                             .Subscribe(_ => _fixPlayableDirector.Play(_fixPlayableDirector.playableAsset));
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Finished)
-                             .Subscribe(_ =>
-             {
-                _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset);
-             });
-
+                             .Subscribe(_ => _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset));
 
         }
     }

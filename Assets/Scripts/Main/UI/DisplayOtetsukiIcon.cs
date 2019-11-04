@@ -8,7 +8,6 @@ using Zenject;
 using SamuraiComma.Main.Manager;
 using SamuraiComma.Main.Player;
 
-
 namespace SamuraiComma.Main.UI
 {
     /// <summary>
