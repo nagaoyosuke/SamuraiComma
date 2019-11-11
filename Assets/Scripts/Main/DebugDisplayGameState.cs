@@ -13,7 +13,11 @@ public class DebugDisplayGameState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _text = GetComponent<Text>(); 
+        _text = GetComponent<Text>();
+
+        JsonManager.Receive.InitializingJson json = new JsonManager.Receive.InitializingJson("s", "gg", "こうじ");
+        SamuraiComma.Main.WS.WSManager.MessageCheck(json.ToJson());
+        //SamuraiComma.Main.WS.WSManager.Send(json.ToJson());
     }
 
     // Update is called once per frame
