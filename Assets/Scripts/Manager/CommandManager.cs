@@ -9,6 +9,7 @@ public class CommandManager : MonoBehaviour
     private Joycon joyconR;
     public bool Lswing;
     public bool Rswing;
+    public int SwingLine;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,15 +25,88 @@ public class CommandManager : MonoBehaviour
         Vector3 accelR = joyconR.GetGyro();
         //コントローラーから方向を受け取る部分
         //RswingおよびLswingで判定する
-        if (accelL.x >= 1.0|| accelL.y >= 1.0|| accelL.z >= 1.0)
+        if (accelL.x >= 1.0 || accelL.x <= -1.0 || accelL.y >= 1.0 || accelL.y <= -1.0 || accelL.z >= 1.0 || accelL.z <= -1.0)
         {
             Rswing = false;
             Lswing = true;
+            if(accelL.x >= 1.0 && accelL.y >= 1.0)
+            {
+                SwingLine = 9;
+            }
+            else if (accelL.x <= -1.0 && accelL.y >= 1.0)
+            {
+                SwingLine = 7;
+            }
+            else if (accelL.x >= 1.0 && accelL.y <= -1.0)
+            {
+                SwingLine = 3;
+            }
+            else if (accelL.x <= -1.0 && accelL.y <= -1.0)
+            {
+                SwingLine = 1;
+            }
+            else if (accelL.x >= -1.0 && accelL.x <= 1.0 && accelL.y >= 1.0)
+            {
+                SwingLine = 8;
+            }
+            else if (accelL.x >= 1.0 && accelL.y >= 1.0 && accelL.y <= 1.0)
+            {
+                SwingLine = 6;
+            }
+            else if (accelL.x <= -1.0 && accelL.y >= 1.0 && accelL.y <= 1.0)
+            {
+                SwingLine = 4;
+            }
+            else if (accelL.x >= -1.0 && accelL.x <= 1.0 && accelL.y <= -1.0)
+            {
+                SwingLine = 2;
+            }
+            else if (accelL.x >= -1.0 && accelL.x <= 1.0 && accelL.y >= 1.0 && accelL.y <= 1.0 && accelL.z >= 1.0)
+            {
+                SwingLine = 5;
+            }
+
         }
-        if (accelR.x >= 1.0 || accelR.y >= 1.0 || accelR.z >= 1.0)
+        if (accelR.x >= 1.0 || accelR.x <= -1.0 || accelR.y >= 1.0 || accelR.y <= -1.0 || accelR.z >= 1.0 || accelR.z <= -1.0)
         {
             Lswing = false;
             Rswing = true;
+            if (accelR.x >= 1.0 && accelR.y >= 1.0)
+            {
+                SwingLine = 9;
+            }
+            else if (accelR.x <= -1.0 && accelR.y >= 1.0)
+            {
+                SwingLine = 7;
+            }
+            else if (accelR.x >= 1.0 && accelR.y <= -1.0)
+            {
+                SwingLine = 3;
+            }
+            else if (accelR.x <= -1.0 && accelR.y <= -1.0)
+            {
+                SwingLine = 1;
+            }
+            else if (accelR.x >= -1.0 && accelR.x <= 1.0 && accelR.y >= 1.0)
+            {
+                SwingLine = 8;
+            }
+            else if (accelR.x >= 1.0 && accelR.y >= 1.0 && accelR.y <= 1.0)
+            {
+                SwingLine = 6;
+            }
+            else if (accelR.x <= -1.0 && accelR.y >= 1.0 && accelR.y <= 1.0)
+            {
+                SwingLine = 4;
+            }
+            else if (accelR.x >= -1.0 && accelR.x <= 1.0 && accelR.y <= -1.0)
+            {
+                SwingLine = 2;
+            }
+            else if (accelR.x >= -1.0 && accelR.x <= 1.0 && accelR.y >= 1.0 && accelR.y <= 1.0 && accelR.z >= 1.0)
+            {
+                SwingLine = 5;
+            }
         }
     }
     
