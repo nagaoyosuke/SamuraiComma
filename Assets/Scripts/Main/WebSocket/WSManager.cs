@@ -19,7 +19,6 @@ namespace SamuraiComma.Main.WS
 
         private static string giveJson;
 
-
         private static ReactiveProperty<JsonManager.Receive.InitializingJson> _giveInit = new ReactiveProperty<JsonManager.Receive.InitializingJson>();
         public static IReadOnlyReactiveProperty<JsonManager.Receive.InitializingJson> giveInit => _giveInit;
 
