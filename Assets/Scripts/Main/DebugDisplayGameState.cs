@@ -15,8 +15,9 @@ public class DebugDisplayGameState : MonoBehaviour
     {
         _text = GetComponent<Text>();
 
-        JsonManager.Receive.InitializingJson json = new JsonManager.Receive.InitializingJson("s", "gg", "こうじ");
-        SamuraiComma.Main.WS.WSManager.MessageCheck(json.ToJson());
+        //ログインまで行けた
+        JsonManager.Send.LoginJson json = new JsonManager.Send.LoginJson(-1,"test1", "kouzi","hirakata");
+        SamuraiComma.Main.WS.WSManager.Send(json.ToJson());
         //SamuraiComma.Main.WS.WSManager.Send(json.ToJson());
     }
 

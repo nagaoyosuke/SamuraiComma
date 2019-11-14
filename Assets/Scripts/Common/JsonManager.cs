@@ -26,16 +26,28 @@ namespace SamuraiComma.Main.Manager
                 /// </summary>
                 public string userName;
 
-                public LoginJson(int userID,string userName)
+                /// <summary>
+                /// 二つ名
+                /// </summary>
+                public string nickName;
+                /// <summary>
+                /// 住所
+                /// </summary>
+                public string streetAddress;
+
+                public LoginJson(int userID,string userName,string nickName,string streetAddress)
                 {
                     state = "Login";
                     this.userID = userID;
                     this.userName = userName;
+                    this.nickName = nickName;
+                    this.streetAddress = streetAddress;
                 }
             }
 
             /// <summary>
             /// 部屋に入るときにサーバに送る情報
+            /// 未使用
             /// </summary>
             public class EnterRoomJson : JsonMethod
             {
@@ -215,7 +227,7 @@ namespace SamuraiComma.Main.Manager
             }
 
             /// <summary>
-            /// 対戦したいやつから送られてきた情報
+            /// 対戦がしたいやつから送られてきた情報
             /// </summary>
             public class MatchingJson : JsonMethod
             {
@@ -223,12 +235,12 @@ namespace SamuraiComma.Main.Manager
                 public string state;
 
                 /// <summary>
-                /// 対戦したい人のID
+                /// 対戦がしたい人のID
                 /// </summary>
                 public int oppID;
 
                 /// <summary>
-                /// 対戦したい人の名前入れる
+                /// 対戦がしたい人の名前
                 /// </summary>
                 public string oppName;
 
@@ -252,7 +264,7 @@ namespace SamuraiComma.Main.Manager
                 /// <summary>
                 /// 相手の名前
                 /// </summary>
-                public string name;
+                public string userName;
                 /// <summary>
                 /// 相手の二つ名
                 /// </summary>
@@ -267,10 +279,10 @@ namespace SamuraiComma.Main.Manager
                 /// </summary>
                 public float startTime;
 
-                public InitializingJson(string name, string nickName, string streetAddress)
+                public InitializingJson(string userName, string nickName, string streetAddress)
                 {
                     this.state = "Init";
-                    this.name = name;
+                    this.userName = userName;
                     this.nickName = nickName;
                     this.streetAddress = streetAddress;
                 }
@@ -323,6 +335,25 @@ namespace SamuraiComma.Main.Manager
                     this.state = state;
                     this.userID = userID;
                     this.userName = userName;
+                }
+            }
+
+            /// <summary>
+            /// サーバからのエラーメッセージ
+            /// </summary>
+            public class ErrorJson : JsonMethod
+            {
+                /// <summary>
+                /// サーバの返事
+                /// </summary>
+                public string state;
+
+                public string message;
+
+                public ErrorJson(string state, string message)
+                {
+                    this.state = state;
+                    this.message = message;
                 }
             }
         }
