@@ -4340,6 +4340,68 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 882878067}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &897065182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 897065185}
+  - component: {fileID: 897065184}
+  - component: {fileID: 897065183}
+  m_Layer: 0
+  m_Name: '[TEMP]joy-con'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &897065183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897065182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ee3f5a331cb47c1801fda295661fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LRmoji: {fileID: 0}
+  _commandManager: {fileID: 897065184}
+--- !u!114 &897065184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897065182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a3fb6ebe02f4cf7902641236011822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lswing: 0
+  Rswing: 0
+  SwingLine: 0
+  SwingSence: 1
+--- !u!4 &897065185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897065182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.90159243, y: 2.223873, z: 2.0897877}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &925456423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4809,6 +4871,9 @@ MonoBehaviour:
   opponentUnityChanAnimation: {fileID: 1749460402}
   screenFader: {fileID: 536027228}
   temp: {fileID: 1051454481}
+  commandManager: {fileID: 0}
+  lastJoyconLine: 0
+  isChangedJoyconLine: 0
 --- !u!114 &1051454481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7026,8 +7091,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580332593}
-  m_LocalRotation: {x: 0.1650262, y: -0.11594784, z: 0.028914081, w: 0.9790232}
-  m_LocalPosition: {x: 0.9219637, y: 2.6577194, z: -5.111347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.21803641, y: 1.3277193, z: 1.648653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
