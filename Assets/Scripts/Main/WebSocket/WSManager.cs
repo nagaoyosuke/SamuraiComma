@@ -169,6 +169,9 @@ namespace SamuraiComma.Main.WS
                 case "Matching":
                     _giveMatching.Value = JsonUtility.FromJson<JsonManager.Receive.MatchingJson>(json);
                     break;
+                default:
+                    print(JsonUtility.FromJson<JsonManager.Receive.APIJson>(json));
+                    break;
             }
 
             //Debug.Log(state);
