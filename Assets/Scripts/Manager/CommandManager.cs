@@ -32,37 +32,37 @@ public class CommandManager : MonoBehaviour
             Lswing = true;
             if(accelL.x >= SwingSence && accelL.y >= SwingSence)
             {
-                SwingLine = 9;
-            }
-            else if (accelL.x <= -SwingSence && accelL.y >= SwingSence)
-            {
                 SwingLine = 7;
             }
-            else if (accelL.x >= SwingSence && accelL.y <= -SwingSence)
+            if (accelL.x <= -SwingSence && accelL.y >= SwingSence)
             {
-                SwingLine = 3;
+                SwingLine = 9;
             }
-            else if (accelL.x <= -SwingSence && accelL.y <= -SwingSence)
+            if (accelL.x >= SwingSence && accelL.y <= -SwingSence)
             {
                 SwingLine = 1;
             }
-            else if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence)
+            if (accelL.x <= -SwingSence && accelL.y <= -SwingSence)
+            {
+                SwingLine = 3;
+            }
+            if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence)
             {
                 SwingLine = 8;
             }
-            else if (accelL.x >= SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
-            {
-                SwingLine = 6;
-            }
-            else if (accelL.x <= -SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
+            if (accelL.x >= SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
             {
                 SwingLine = 4;
             }
-            else if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y <= -SwingSence)
+            if (accelL.x <= -SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
+            {
+                SwingLine = 6;
+            }
+            if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y <= -SwingSence)
             {
                 SwingLine = 2;
             }
-            else if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence && accelL.y <= SwingSence && accelL.z >= SwingSence)
+            if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence && accelL.y <= SwingSence && accelL.z >= SwingSence)
             {
                 SwingLine = 5;
             }
@@ -74,37 +74,37 @@ public class CommandManager : MonoBehaviour
             Rswing = true;
             if (accelR.x >= SwingSence && accelR.y >= SwingSence)
             {
-                SwingLine = 9;
-            }
-            else if (accelR.x <= -SwingSence && accelR.y >= SwingSence)
-            {
                 SwingLine = 7;
             }
-            else if (accelR.x >= SwingSence && accelR.y <= -SwingSence)
+            if (accelR.x <= -SwingSence && accelR.y >= SwingSence)
             {
-                SwingLine = 3;
+                SwingLine = 9;
             }
-            else if (accelR.x <= -SwingSence && accelR.y <= -SwingSence)
+            if (accelR.x >= SwingSence && accelR.y <= -SwingSence)
             {
                 SwingLine = 1;
             }
-            else if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence)
+            if (accelR.x <= -SwingSence && accelR.y <= -SwingSence)
+            {
+                SwingLine = 3;
+            }
+            if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence)
             {
                 SwingLine = 8;
             }
-            else if (accelR.x >= SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
-            {
-                SwingLine = 6;
-            }
-            else if (accelR.x <= -SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
+            if (accelR.x >= SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
             {
                 SwingLine = 4;
             }
-            else if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y <= -SwingSence)
+            if (accelR.x <= -SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
+            {
+                SwingLine = 6;
+            }
+            if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y <= -SwingSence)
             {
                 SwingLine = 2;
             }
-            else if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence && accelR.y <= SwingSence && accelR.z >= SwingSence)
+            if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence && accelR.y <= SwingSence && accelR.z >= SwingSence)
             {
                 SwingLine = 5;
             }
