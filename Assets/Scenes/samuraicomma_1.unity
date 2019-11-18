@@ -552,7 +552,7 @@ MonoBehaviour:
   Lswing: 0
   Rswing: 0
   SwingLine: 0
-  SwingSence: 5.09
+  SwingSence: 5
 --- !u!114 &1128432893
 MonoBehaviour:
   m_ObjectHideFlags: 0
