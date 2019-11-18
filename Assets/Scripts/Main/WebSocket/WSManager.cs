@@ -19,16 +19,22 @@ namespace SamuraiComma.Main.WS
 
         private static string giveJson;
 
-
         private static ReactiveProperty<JsonManager.Receive.InitializingJson> _giveInit = new ReactiveProperty<JsonManager.Receive.InitializingJson>();
         public static IReadOnlyReactiveProperty<JsonManager.Receive.InitializingJson> giveInit => _giveInit;
 
         private static ReactiveProperty<JsonManager.Receive.BattleJson> _giveBattle = new ReactiveProperty<JsonManager.Receive.BattleJson>();
         public static IReadOnlyReactiveProperty<JsonManager.Receive.BattleJson> giveBattle => _giveBattle;
 
+        private static ReactiveProperty<JsonManager.Receive.LoginJson> _giveLogin = new ReactiveProperty<JsonManager.Receive.LoginJson>();
+        public static IReadOnlyReactiveProperty<JsonManager.Receive.LoginJson> giveLogin => _giveLogin;
+
+        private static ReactiveProperty<JsonManager.Receive.MatchingJson> _giveMatching = new ReactiveProperty<JsonManager.Receive.MatchingJson>();
+        public static IReadOnlyReactiveProperty<JsonManager.Receive.MatchingJson> giveMatching => _giveMatching;
+
+
         private static bool isInit;
 
-        void Start()
+        void Awake()
         {
             DontDestroyOnLoad(transform.gameObject);
             Connect();
@@ -55,9 +61,10 @@ namespace SamuraiComma.Main.WS
         /// <param name="url"></param>
         public static void Connect(string url = "ws://127.0.0.1:12345")
         {
+            ws = new WebSocket(url);
+
             Initialization();
 
-            ws = new WebSocket(url);
             //ws = new WebSocket("wss://pythonwebsockettest.herokuapp.com");
 
             ws.Connect();
@@ -156,7 +163,15 @@ namespace SamuraiComma.Main.WS
                 case "Battle":
                     _giveBattle.Value = JsonUtility.FromJson<JsonManager.Receive.BattleJson>(json);
                     break;
-
+                case "Login":
+                    _giveLogin.Value = JsonUtility.FromJson<JsonManager.Receive.LoginJson>(json);
+                    break;
+                case "Matching":
+                    _giveMatching.Value = JsonUtility.FromJson<JsonManager.Receive.MatchingJson>(json);
+                    break;
+                default:
+                    print(JsonUtility.FromJson<JsonManager.Receive.APIJson>(json));
+                    break;
             }
 
             //Debug.Log(state);

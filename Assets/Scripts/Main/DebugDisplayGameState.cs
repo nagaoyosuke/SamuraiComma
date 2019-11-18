@@ -11,12 +11,32 @@ public class DebugDisplayGameState : MonoBehaviour
     private Text _text;
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
         _text = GetComponent<Text>();
 
-        JsonManager.Receive.InitializingJson json = new JsonManager.Receive.InitializingJson("s", "gg", "こうじ");
-        SamuraiComma.Main.WS.WSManager.MessageCheck(json.ToJson());
+        //ログインまで行けた
+        //JsonManager.Send.LoginJson json = new JsonManager.Send.LoginJson(-1, "test1", "kouzi", "hirakata");
+        //print(json.ToJson());
+
+        ////JsonManager.Send.MatchingJson json2 = new JsonManager.Send.MatchingJson(-1,"test",false);
+        ////print(json2.ToJson());
+
+        ////JsonManager.Receive.LoginJson json3 = new JsonManager.Receive.LoginJson(-1);
+        ////print(json3.ToJson());
+
+        ////JsonManager.Receive.MatchingJson json4 = new JsonManager.Receive.MatchingJson(-1,"test");
+        ////print(json4.ToJson());
+
+
+        //SamuraiComma.Main.WS.WSManager.Send(json.ToJson());
+
+        //yield return new WaitForSeconds(1.0f);
+
+        //JsonManager.Send.MatchingJson json2 = new JsonManager.Send.MatchingJson(1, "ここ", true);
+        //print(json2.ToJson());
+        //SamuraiComma.Main.WS.WSManager.Send(json2.ToJson());
+
         //SamuraiComma.Main.WS.WSManager.Send(json.ToJson());
     }
 
