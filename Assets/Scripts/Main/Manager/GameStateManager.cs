@@ -19,7 +19,7 @@ namespace SamuraiComma.Main.Manager
     class GameStateManager : MonoBehaviour
     {
 
-        private ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Initializing);
+        private ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Direction);
         public IReadOnlyReactiveProperty<GameState> CurrentGameState => _gameState;
 
         [SerializeField] private ObservablePrepareTimelineTrigger _prepareTimelineTrigger;
@@ -29,18 +29,17 @@ namespace SamuraiComma.Main.Manager
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
 
-        //仮
-        [SerializeField] private TempData tempData;
-
         private void Start()
         {
 
             //サーバーにデータを送受信したら
+            /*
             tempData.tempserverflag
                     .SkipLatestValueOnSubscribe()
                     .DistinctUntilChanged()
                     .Where(x => x == false && CurrentGameState.Value == GameState.Initializing)
                     .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
+                    */
 
             //directionの演出が終わったら
             _prepareTimelineTrigger.isFinishedDirection
@@ -55,10 +54,13 @@ namespace SamuraiComma.Main.Manager
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
 
             //サーバーにデータを送受信したら
-            tempData.tempserverflag
-                    .DistinctUntilChanged()
-                    .Where(x => x == false && CurrentGameState.Value == GameState.Battle)
-                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
+            WS.WSManager.giveBattle
+                        .DistinctUntilChanged()
+                        .Where(_ =>
+                           CurrentGameState.Value == GameState.Battle || CurrentGameState.Value == GameState.WaitingSignal
+                               //&&自分がデータを送信したことを通知するflag(send()とかで監視)
+                          )
+                        .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
 
             //アニメーション終了後
             _victoryTimelineTrigger.isFinishedDirection

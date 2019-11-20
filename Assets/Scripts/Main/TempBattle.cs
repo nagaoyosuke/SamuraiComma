@@ -3,29 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SamuraiComma.Main.Manager;
+using SamuraiComma.Main.WS;
+
+
 using UniRx;
 using Zenject;
 
 //joy-conのやつができるまでの繋ぎ
 public class TempBattle : MonoBehaviour
 {
+
+    public DebugLogin debugtes;
+    public Text timeLimitText;
     public GameObject setsunaButton;
     public UnityChanAnimationController unityChanAnimation;
     public UnityChanAnimationController opponentUnityChanAnimation;
-
     public ScreenFader screenFader;
-    public TempData temp;
-
     public CommandManager commandManager;
+
     [Inject] private GameStateManager _gameStateManager;
+    [Inject] private TimeManager _timeManager;
 
     private IntReactiveProperty _joycon = new IntReactiveProperty(0);
     public IReadOnlyReactiveProperty<int> joycon => _joycon;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        Sound.PlayBgm("wind");
 
         //joyconを振ると動作(仮)
         _joycon
@@ -33,6 +37,18 @@ public class TempBattle : MonoBehaviour
             .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle)
             .Subscribe(_ => OnClickedTempButton());
 
+        WSManager.giveBattle
+                 .SkipLatestValueOnSubscribe()
+                 .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle || _gameStateManager.CurrentGameState.Value == GameState.Finished)
+                 .DistinctUntilChanged()
+                 .Delay(System.TimeSpan.FromSeconds(3))
+                 .Subscribe(_ =>
+                 {
+                    screenFader.isFadeIn = true;
+                    print(_timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
+
+                 });
+                           
 
     }
 
@@ -44,22 +60,17 @@ public class TempBattle : MonoBehaviour
 
     public void OnClickedTempButton(){
         Sound.PlaySe("hero01");
-        screenFader.isFadeIn = true;//連打するとフェイドインされないバグ
+        timeLimitText.enabled = false;
         setsunaButton.SetActive(false);
+        JsonManager.Send.BattleJson json3 = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
+        //一度目必ずエラーが起きるので二度送信
+        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
+        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
+        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
+        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
 
-        temp.TempServer(1*60);
-        temp.TempServer(5*60);
-    }
-
-
-    public void BeBeaten(){
-        unityChanAnimation.PlayAnimation("isAttack");
-        StartCoroutine(DelayClass.DelayCoroutin(80, () => opponentUnityChanAnimation.PlayAnimation("isDamaged")));
-        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
-
-        opponentUnityChanAnimation.PlayAnimation("isAttack");
-        StartCoroutine(DelayClass.DelayCoroutin(80, () => unityChanAnimation.PlayAnimation("isDamaged")));
-        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
+        screenFader.isFadeOut = true;
 
     }
+
 }

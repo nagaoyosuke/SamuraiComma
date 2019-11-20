@@ -17,7 +17,7 @@ namespace SamuraiComma.Main.Manager
         [Inject] private GameStateManager _gameStateManager;
 
         [SerializeField] private float _singalTimeLimit = 10.00f;         //サーバーからもらう
-        [SerializeField] private readonly float _trajectoryTimeLimit = 5.00f;
+        [SerializeField] public readonly float _trajectoryTimeLimit = 5.00f;
 
         [SerializeField] private FloatReactiveProperty _signalTimer;
         [SerializeField] private FloatReactiveProperty _trajectoryTimer;
