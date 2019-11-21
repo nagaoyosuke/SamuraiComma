@@ -30,22 +30,7 @@ public class CommandManager : MonoBehaviour
         {
             Rswing = false;
             Lswing = true;
-            if(accelL.x >= SwingSence && accelL.y >= SwingSence)
-            {
-                SwingLine = 7;
-            }
-            if (accelL.x <= -SwingSence && accelL.y >= SwingSence)
-            {
-                SwingLine = 9;
-            }
-            if (accelL.x >= SwingSence && accelL.y <= -SwingSence)
-            {
-                SwingLine = 1;
-            }
-            if (accelL.x <= -SwingSence && accelL.y <= -SwingSence)
-            {
-                SwingLine = 3;
-            }
+            
             if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence)
             {
                 SwingLine = 8;
@@ -62,32 +47,14 @@ public class CommandManager : MonoBehaviour
             {
                 SwingLine = 2;
             }
-            if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence && accelL.y <= SwingSence && accelL.z >= SwingSence)
-            {
-                SwingLine = 5;
-            }
+            
 
         }
         if (accelR.x >= SwingSence || accelR.x <= -SwingSence || accelR.y >= SwingSence || accelR.y <= -SwingSence || accelR.z >= SwingSence || accelR.z <= -SwingSence)
         {
             Lswing = false;
             Rswing = true;
-            if (accelR.x >= SwingSence && accelR.y >= SwingSence)
-            {
-                SwingLine = 7;
-            }
-            if (accelR.x <= -SwingSence && accelR.y >= SwingSence)
-            {
-                SwingLine = 9;
-            }
-            if (accelR.x >= SwingSence && accelR.y <= -SwingSence)
-            {
-                SwingLine = 1;
-            }
-            if (accelR.x <= -SwingSence && accelR.y <= -SwingSence)
-            {
-                SwingLine = 3;
-            }
+            
             if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence)
             {
                 SwingLine = 8;
@@ -104,10 +71,7 @@ public class CommandManager : MonoBehaviour
             {
                 SwingLine = 2;
             }
-            if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence && accelR.y <= SwingSence && accelR.z >= SwingSence)
-            {
-                SwingLine = 5;
-            }
+            
         }
     }
     
