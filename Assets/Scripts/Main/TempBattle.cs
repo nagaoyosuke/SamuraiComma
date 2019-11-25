@@ -38,7 +38,7 @@ public class TempBattle : MonoBehaviour
 
     private void Update()
     {
-        _joycon.Value = commandManager.SwingLine;
+      //  _joycon.Value = commandManager.SwingLine;
 
     }
 
