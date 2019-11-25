@@ -37,6 +37,7 @@ public class DebugTest : MonoBehaviour
         WSManager.giveBattle
                  .SkipLatestValueOnSubscribe()
                  .DistinctUntilChanged()
+                 .Delay(System.TimeSpan.FromSeconds(3))
                  .Subscribe(json => 
         {
             a = true;
