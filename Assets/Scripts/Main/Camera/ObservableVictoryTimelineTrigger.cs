@@ -14,9 +14,13 @@ namespace SamuraiComma.Main.Camera
 
     public class ObservableVictoryTimelineTrigger : MonoBehaviour,ITimeControl
     {
+        [SerializeField] private const int _startLoopingAnimTime = 11;
         [SerializeField] private BoolReactiveProperty _isFinishedDirection = new BoolReactiveProperty(false);
+        [SerializeField] private BoolReactiveProperty _isLoopingPlayerAnim = new BoolReactiveProperty(false);
 
         public IReadOnlyReactiveProperty<bool> isFinishedDirection => _isFinishedDirection;
+        public IReadOnlyReactiveProperty<bool> isLoopingPlayerAnim => _isLoopingPlayerAnim;
+
 
 
         public void OnControlTimeStart()
@@ -31,6 +35,8 @@ namespace SamuraiComma.Main.Camera
 
         public void SetTime(double time)
         {
+            if (time > _startLoopingAnimTime)
+                _isLoopingPlayerAnim.SetValueAndForceNotify(true);
         }
 
     }

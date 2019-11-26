@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -44,7 +44,6 @@ namespace SamuraiComma.Main.Manager
                              .FirstOrDefault(x => x == GameState.Finished)
                              .Delay(System.TimeSpan.FromSeconds(3))
                              .Subscribe(_ => _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset));
-
         }
     }
 }
