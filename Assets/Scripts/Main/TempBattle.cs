@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SamuraiComma.Main.Manager;
 using SamuraiComma.Main.WS;
+using SamuraiComma.Main.Player;
 
 
 using UniRx;
@@ -16,8 +17,8 @@ public class TempBattle : MonoBehaviour
     public DebugLogin debugtes;
     public Text timeLimitText;
     public GameObject setsunaButton;
-    public UnityChanAnimationController unityChanAnimation;
-    public UnityChanAnimationController opponentUnityChanAnimation;
+    public PlayerAnimationController unityChanAnimation;
+    public PlayerAnimationController opponentUnityChanAnimation;
     public ScreenFader screenFader;
     public CommandManager commandManager;
 

@@ -63,6 +63,7 @@ namespace SamuraiComma.Main.Manager
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
 
             //アニメーション終了後
+            //今はplayabledirectorのlap modeをholdにしてるので通知されない(resultに移動しない)
             _victoryTimelineTrigger.isFinishedDirection
                                    .DistinctUntilChanged()
                                    .Where(x => x == true && CurrentGameState.Value == GameState.Finished)

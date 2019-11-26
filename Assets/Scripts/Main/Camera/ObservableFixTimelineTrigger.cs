@@ -21,6 +21,7 @@ namespace SamuraiComma.Main.Camera
 
         public void OnControlTimeStart()
         {
+            _isFinishedDirection.SetValueAndForceNotify(false);
         }
 
         public void OnControlTimeStop()
