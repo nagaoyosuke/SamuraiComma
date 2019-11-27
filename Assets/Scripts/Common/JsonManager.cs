@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SamuraiComma.Main.Manager
 {
@@ -299,12 +300,12 @@ namespace SamuraiComma.Main.Manager
                 /// <summary>
                 /// 自分の勝敗
                 /// </summary>
-                public bool isJudge;
+                public string isJudge;
 
                 public float myTime;
                 public float oppTime;
 
-                public BattleJson(bool isJudge,float myTime,float oppTime)
+                public BattleJson(string isJudge,float myTime,float oppTime)
                 {
                     this.state = "Battle";
                     this.isJudge = isJudge;
@@ -314,8 +315,57 @@ namespace SamuraiComma.Main.Manager
             }
 
             /// <summary>
+            /// オンラインのユーザー一覧を取得
+            /// </summary>
+            public class MemberListJson : JsonMethod
+            {
+                //サーバが判断するために
+                public string state;
+
+                public MemberJson[] Member;
+                public MemberListJson(MemberJson[] Member)
+                {
+                    this.state = "MemberList";
+                    this.Member = Member;
+                }
+            }
+
+            /// <summary>
+            /// オンラインのユーザーを取得
+            /// </summary>
+            [Serializable]
+            public class MemberJson : JsonMethod
+            {
+                //サーバが判断するために
+                public int userID;
+
+                /// <summary>
+                /// 相手の名前
+                /// </summary>
+                public string userName;
+                /// <summary>
+                /// 相手の二つ名
+                /// </summary>
+                public string nickName;
+                /// <summary>
+                /// 相手の住所
+                /// </summary>
+                public string streetAddress;
+
+
+                public MemberJson(int userID, string userName, string nickName, string streetAddress)
+                {
+                    this.userID = userID;
+                    this.userName = userName;
+                    this.nickName = nickName;
+                    this.streetAddress = streetAddress;
+                }
+            }
+
+            /// <summary>
             /// API使った時のサーバからの返事
             /// </summary>
+            [Serializable]
             public class APIJson : JsonMethod
             {
                 /// <summary>
