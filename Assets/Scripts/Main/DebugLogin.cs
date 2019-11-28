@@ -21,5 +21,10 @@ public class DebugLogin : MonoBehaviour
         JsonManager.Send.MatchingJson json2 = new JsonManager.Send.MatchingJson(1, "ここ", true);
         SamuraiComma.Main.WS.WSManager.Send(json2.ToJson());
 
+        yield return new WaitForSeconds(1.0f);
+
+        JsonManager.Send.InitializingJson initializingJson = new JsonManager.Send.InitializingJson("Yosuke", "Unimaro", "Japan");
+        SamuraiComma.Main.WS.WSManager.Send(initializingJson.ToJson());
+
     }
 }

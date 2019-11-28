@@ -5085,6 +5085,7 @@ GameObject:
   - component: {fileID: 1051454485}
   - component: {fileID: 1051454477}
   - component: {fileID: 1051454479}
+  - component: {fileID: 1051454481}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -5139,6 +5140,7 @@ MonoBehaviour:
   - {fileID: 1051454478}
   - {fileID: 1051454482}
   - {fileID: 1051454477}
+  - {fileID: 1051454481}
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 0}
@@ -5203,6 +5205,18 @@ MonoBehaviour:
   opponentUnityChanAnimation: {fileID: 1749460402}
   screenFader: {fileID: 536027228}
   commandManager: {fileID: 897065184}
+--- !u!114 &1051454481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051454473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3d06d577f98444cab9dc68bd8f2ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1051454482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5526,7 +5540,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 97270807}
-  isJudge: 0
 --- !u!4 &1090457343
 Transform:
   m_ObjectHideFlags: 0
@@ -10310,6 +10323,14 @@ PrefabInstance:
       propertyPath: m_BlendShapeWeights.Array.data[1]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
+      propertyPath: isActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400050, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.55629915
@@ -10325,14 +10346,6 @@ PrefabInstance:
     - target: {fileID: 400050, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7103707
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
-      propertyPath: isActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13700014, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[0]

@@ -299,12 +299,12 @@ namespace SamuraiComma.Main.Manager
                 /// <summary>
                 /// 自分の勝敗
                 /// </summary>
-                public bool isJudge;
+                public string isJudge;
 
                 public float myTime;
                 public float oppTime;
 
-                public BattleJson(bool isJudge,float myTime,float oppTime)
+                public BattleJson(string isJudge,float myTime,float oppTime)
                 {
                     this.state = "Battle";
                     this.isJudge = isJudge;

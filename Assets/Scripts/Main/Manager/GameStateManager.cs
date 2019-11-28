@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Threading;
+using System.Linq;
 using UnityEngine;
 using UniRx;
 using SamuraiComma.Main.Camera;
 using SamuraiComma.Main.Player;
+using SamuraiComma.Main.WS;
 using Zenject;
-using UnityEngine.Timeline;
-using UnityEngine.Assertions;
-using System.Linq;
 
 namespace SamuraiComma.Main.Manager
 {
@@ -19,7 +17,7 @@ namespace SamuraiComma.Main.Manager
     class GameStateManager : MonoBehaviour
     {
 
-        private ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Direction);
+        private ReactiveProperty<GameState> _gameState = new ReactiveProperty<GameState>(GameState.Initializing);
         public IReadOnlyReactiveProperty<GameState> CurrentGameState => _gameState;
 
         [SerializeField] private ObservablePrepareTimelineTrigger _prepareTimelineTrigger;
@@ -28,18 +26,16 @@ namespace SamuraiComma.Main.Manager
         [SerializeField] private PlayerState _playerState;
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
+        [Inject] private SendDataStateManager _sendDataStateManager;
 
         private void Start()
         {
+            //サーバーにデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
+            WSManager.giveInit
+                     .DistinctUntilChanged()
+                     .Where(_ => CurrentGameState.Value == GameState.Initializing)
+                     .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
 
-            //サーバーにデータを送受信したら
-            /*
-            tempData.tempserverflag
-                    .SkipLatestValueOnSubscribe()
-                    .DistinctUntilChanged()
-                    .Where(x => x == false && CurrentGameState.Value == GameState.Initializing)
-                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
-                    */
 
             //directionの演出が終わったら
             _prepareTimelineTrigger.isFinishedDirection
@@ -56,10 +52,7 @@ namespace SamuraiComma.Main.Manager
             //サーバーにデータを送受信したら
             WS.WSManager.giveBattle
                         .DistinctUntilChanged()
-                        .Where(_ =>
-                           CurrentGameState.Value == GameState.Battle || CurrentGameState.Value == GameState.WaitingSignal
-                               //&&自分がデータを送信したことを通知するflag(send()とかで監視)
-                          )
+                        .TakeWhile(_ => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent)
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
 
             //アニメーション終了後
@@ -67,6 +60,9 @@ namespace SamuraiComma.Main.Manager
                                    .DistinctUntilChanged()
                                    .Where(x => x == true && CurrentGameState.Value == GameState.Finished)
                                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Result));
+                                   
+
+
         }
     }
 }

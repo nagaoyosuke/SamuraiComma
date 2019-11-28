@@ -36,7 +36,13 @@ namespace SamuraiComma.Main.WS
 
         private static bool isInit;
 
-        void Awake()
+        /// <summary>
+        /// サーバーにデータを送信するストリームソース
+        /// </summary>
+        private static Subject<Unit> _onSent = new Subject<Unit>();
+        public static IObservable<Unit> onSent => _onSent;
+
+        private void Awake()
         {
             DontDestroyOnLoad(transform.gameObject);
             Connect();
@@ -120,6 +126,8 @@ namespace SamuraiComma.Main.WS
             {
                 sw.Restart();
                 ws.Send(json);
+                _onSent.OnNext(Unit.Default);
+
             }
             catch (Exception e)
             {

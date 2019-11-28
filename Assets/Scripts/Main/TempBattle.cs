@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using SamuraiComma.Main.Manager;
 using SamuraiComma.Main.WS;
 using SamuraiComma.Main.Player;
-
-
 using UniRx;
 using Zenject;
 
@@ -65,9 +63,6 @@ public class TempBattle : MonoBehaviour
         setsunaButton.SetActive(false);
         JsonManager.Send.BattleJson json3 = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
         //一度目必ずエラーが起きるので二度送信
-        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
-        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
-        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
         SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
 
         screenFader.isFadeOut = true;

@@ -33,11 +33,17 @@ namespace SamuraiComma.Main.UI
                              {
                                  _text.enabled = true;
 
-                                 if (WSManager.giveBattle.Value.isJudge)
+                                 if (WSManager.giveBattle.Value.isJudge == "Win")
                                  {
                                      _text.text = "かち";
-                                 } else {
+                                 }
+                                 else if (WSManager.giveBattle.Value.isJudge == "Lose")
+                                 {
                                      _text.text = "まけ";
+                                 }
+                                 else if (WSManager.giveBattle.Value.isJudge == "Draw")
+                                 {
+                                     _text.text = "引き分け";
                                  }
                              }
                                        );

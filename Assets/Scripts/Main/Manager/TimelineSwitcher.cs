@@ -25,7 +25,8 @@ namespace SamuraiComma.Main.Manager
         {
             //演出タイムなら、演出用タイムラインを再生する。
             _gameStateManager.CurrentGameState
-                             .FirstOrDefault(x => x == GameState.Direction)
+                             .DistinctUntilChanged()
+                             .Where(x => x == GameState.Direction)
                              .Subscribe(_ => _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset));
 
 
