@@ -38,16 +38,6 @@ namespace SamuraiComma.Main.Manager
             WSManager.onSent
                      .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle)
                      .Subscribe(_ => _battleSendState.Value = SendDataState.OnSent);
-
-            WSManager.onSent
-                     .Subscribe(_ =>
-            {
-                print(_initSendState.Value);
-                print(_battleSendState.Value);
-
-            });
-
-
         }
     }
 }

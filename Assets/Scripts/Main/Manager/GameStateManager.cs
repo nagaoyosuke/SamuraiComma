@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UniRx;
+using UniRx.Async;
 using SamuraiComma.Main.Camera;
 using SamuraiComma.Main.Player;
 using SamuraiComma.Main.WS;
@@ -50,18 +50,25 @@ namespace SamuraiComma.Main.Manager
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
 
             //サーバーにデータを送受信したら
-            WS.WSManager.giveBattle
+            WSManager.giveBattle
                         .DistinctUntilChanged()
-                        .TakeWhile(_ => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent)
-                        .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
+                        .Where(_ => CurrentGameState.Value == GameState.Battle)
+                        .Subscribe(_ => GameStateFinishedAsync().Forget());
+
 
             //アニメーション終了後
             _victoryTimelineTrigger.isLoopingPlayerAnim
                                    .DistinctUntilChanged()
                                    .Where(x => x == true && CurrentGameState.Value == GameState.Finished)
                                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Result));
-                                   
 
+
+        }
+
+        private async UniTaskVoid GameStateFinishedAsync()
+        {
+            await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
+            _gameState.SetValueAndForceNotify(GameState.Finished);
 
         }
     }
