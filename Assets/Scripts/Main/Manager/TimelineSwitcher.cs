@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 using UniRx;
 using Zenject;
 
@@ -23,12 +22,10 @@ namespace SamuraiComma.Main.Manager
 
         private void Start()
         {
-            //演出タイムなら、演出用タイムラインを再生する。
             _gameStateManager.CurrentGameState
-                             .DistinctUntilChanged()
-                             .Where(x => x == GameState.Direction)
+                             .FirstOrDefault(x => x == GameState.Direction)
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
                              .Subscribe(_ => _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset));
-
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.WaitingSignal)
@@ -37,7 +34,7 @@ namespace SamuraiComma.Main.Manager
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Finished)
                              //delayかけないとなぜか動作しない。。
-                             .Delay(System.TimeSpan.FromSeconds(1))
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
                              .Subscribe(_ => _fixPlayableDirector.Stop());
 
             //ここでplayerStateのisDeathで条件分岐

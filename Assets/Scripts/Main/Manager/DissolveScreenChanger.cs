@@ -8,25 +8,24 @@ namespace SamuraiComma.Main.Manager
 {
     /// <summary>
     /// 2019/11/04 toyoda
-    /// 
+    /// 現在未使用
     /// </summary>
 
     public class DissolveScreenChanger : MonoBehaviour
     {
 
-        [SerializeField] private ScreenFader _screenFader;
+        [Inject] private ScreenFader _screenFader;
         [Inject] private GameStateManager _gameStateManager;
         [SerializeField] private int _waitingSeconds = 1;
 
         private void Start()
         {
+            /*
             _gameStateManager.CurrentGameState
-                .DistinctUntilChanged()
+                             .DistinctUntilChanged()
                              .Where(x => x == GameState.Direction)
                              .Subscribe(_ =>_screenFader.isFadeIn = true);
-                             
-
-
+            */
         }
     }
 }

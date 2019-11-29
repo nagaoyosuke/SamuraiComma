@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UniRx;
-using SamuraiComma.Main.Camera;
-using SamuraiComma.Main.Player;
 using SamuraiComma.Main.WS;
 using Zenject;
-using UnityEngine.Timeline;
-using UnityEngine.Assertions;
 using System.Linq;
 
 namespace SamuraiComma.Main.Manager

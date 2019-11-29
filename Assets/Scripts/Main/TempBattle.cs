@@ -1,72 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using SamuraiComma.Main.Manager;
-using SamuraiComma.Main.WS;
-using SamuraiComma.Main.Player;
 using UniRx;
 using Zenject;
 
 //joy-conのやつができるまでの繋ぎ
 public class TempBattle : MonoBehaviour
 {
-
-    public DebugLogin debugtes;
-    public Text timeLimitText;
     public GameObject setsunaButton;
-    public PlayerAnimationController unityChanAnimation;
-    public PlayerAnimationController opponentUnityChanAnimation;
-    public ScreenFader screenFader;
     public CommandManager commandManager;
 
+    [Inject] private ScreenFader _screenFader;
     [Inject] private GameStateManager _gameStateManager;
     [Inject] private TimeManager _timeManager;
+    [Inject] private SendDataStateManager _sendDataStateManager;
 
     private IntReactiveProperty _joycon = new IntReactiveProperty(0);
     public IReadOnlyReactiveProperty<int> joycon => _joycon;
 
-    // Start is called before the first frame update
     private void Start()
     {
-
         //joyconを振ると動作(仮)
         _joycon
             .DistinctUntilChanged()
             .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle)
             .Subscribe(_ => OnClickedTempButton());
 
-        WSManager.giveBattle
-                 .SkipLatestValueOnSubscribe()
-                 .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle || _gameStateManager.CurrentGameState.Value == GameState.Finished)
-                 .DistinctUntilChanged()
-                 .Delay(System.TimeSpan.FromSeconds(3))
-                 .Subscribe(_ =>
-                 {
-                    screenFader.isFadeIn = true;
-                    print(_timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
-
-                 });
-                           
-
+        _sendDataStateManager.battleSendState
+                             .DistinctUntilChanged()
+                             .Where(x => x == SendDataState.OnSent)
+                             .Subscribe(_ => _screenFader.isFadeOut = true);
     }
 
     private void Update()
     {
         _joycon.Value = commandManager.SwingLine;
-
     }
 
     public void OnClickedTempButton(){
+
         Sound.PlaySe("hero01");
-        timeLimitText.enabled = false;
         setsunaButton.SetActive(false);
         JsonManager.Send.BattleJson json3 = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
-        //一度目必ずエラーが起きるので二度送信
         SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
-
-        screenFader.isFadeOut = true;
-
     }
 
 }

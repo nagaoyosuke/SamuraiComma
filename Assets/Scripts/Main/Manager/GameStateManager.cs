@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UniRx;
 using UniRx.Async;
@@ -27,14 +28,19 @@ namespace SamuraiComma.Main.Manager
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
         [Inject] private SendDataStateManager _sendDataStateManager;
+        [Inject] private ScreenFader _screenFader;
 
         private void Start()
         {
             //サーバーにデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
             WSManager.giveInit
-                     .DistinctUntilChanged()
+                     .SkipLatestValueOnSubscribe()
                      .Where(_ => CurrentGameState.Value == GameState.Initializing)
-                     .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
+                     .Subscribe(_ =>
+            {
+                _screenFader.isFadeIn = true;
+                _gameState.SetValueAndForceNotify(GameState.Direction);
+            });
 
 
             //directionの演出が終わったら
@@ -67,11 +73,13 @@ namespace SamuraiComma.Main.Manager
 
         private async UniTaskVoid GameStateFinishedAsync()
         {
-            await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
-            _gameState.SetValueAndForceNotify(GameState.Finished);
 
+            await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
+            await UniTask.WaitWhile(() => _screenFader.isFadeOut);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+
+            _screenFader.isFadeIn = true;
+            _gameState.SetValueAndForceNotify(GameState.Finished);
         }
     }
 }
-
-
