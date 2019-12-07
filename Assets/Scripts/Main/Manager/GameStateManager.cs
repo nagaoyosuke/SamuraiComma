@@ -55,7 +55,7 @@ namespace SamuraiComma.Main.Manager
                         .Where(x => x == true && CurrentGameState.Value == GameState.WaitingSignal)
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
 
-            //サーバーにデータを送受信したら
+            //サーバーからデータを受信したら
             WSManager.giveBattle
                         .DistinctUntilChanged()
                         .Where(_ => CurrentGameState.Value == GameState.Battle)

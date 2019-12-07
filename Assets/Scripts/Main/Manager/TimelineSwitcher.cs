@@ -40,7 +40,7 @@ namespace SamuraiComma.Main.Manager
             //ここでplayerStateのisDeathで条件分岐
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Finished)
-                             .Delay(System.TimeSpan.FromSeconds(3))
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
                              .Subscribe(_ => _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset));
         }
     }

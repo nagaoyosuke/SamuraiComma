@@ -29,6 +29,10 @@ public class TempBattle : MonoBehaviour
                              .DistinctUntilChanged()
                              .Where(x => x == SendDataState.OnSent)
                              .Subscribe(_ => _screenFader.isFadeOut = true);
+
+        _timeManager.trajectoryTimer
+                    .Where(x => x <= 0.0f)
+                    .Subscribe(_=>setsunaButton.SetActive(false));
     }
 
     private void Update()
