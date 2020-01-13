@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 using UniRx;
@@ -71,9 +71,12 @@ namespace SamuraiComma.Main.Manager
 
         }
 
+        /// <summary>
+        /// バトルデータをサーバーに送信するまで待機し、画面暗転した後、GameStateをFinishedにする。
+        /// </summary>
+        /// <returns>The state finished async.</returns>
         private async UniTaskVoid GameStateFinishedAsync()
         {
-
             await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
             await UniTask.WaitWhile(() => _screenFader.isFadeOut);
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
