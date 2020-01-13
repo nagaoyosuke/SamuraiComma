@@ -9,7 +9,8 @@ public class CommandManager : MonoBehaviour
     private Joycon joyconR;
     public bool Lswing;
     public bool Rswing;
-    public int SwingLine;
+    public int SwingLineL;
+    public int SwingLineR;
     [SerializeField, Range(0.1f, 10.0f)] float SwingSence = 1.0f;
     // Start is called before the first frame update
     void Start()
@@ -28,86 +29,48 @@ public class CommandManager : MonoBehaviour
         //RswingおよびLswingで判定する
         if (accelL.x >= SwingSence || accelL.x <= -SwingSence || accelL.y >= SwingSence || accelL.y <= -SwingSence || accelL.z >= SwingSence || accelL.z <= -SwingSence)
         {
-            Rswing = false;
             Lswing = true;
-            if(accelL.x >= SwingSence && accelL.y >= SwingSence)
-            {
-                SwingLine = 7;
-            }
-            if (accelL.x <= -SwingSence && accelL.y >= SwingSence)
-            {
-                SwingLine = 9;
-            }
-            if (accelL.x >= SwingSence && accelL.y <= -SwingSence)
-            {
-                SwingLine = 1;
-            }
-            if (accelL.x <= -SwingSence && accelL.y <= -SwingSence)
-            {
-                SwingLine = 3;
-            }
+            
             if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence)
             {
-                SwingLine = 8;
+                SwingLineL = 8;
             }
             if (accelL.x >= SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
             {
-                SwingLine = 4;
+                SwingLineL = 4;
             }
             if (accelL.x <= -SwingSence && accelL.y >= -SwingSence && accelL.y <= SwingSence)
             {
-                SwingLine = 6;
+                SwingLineL = 6;
             }
             if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y <= -SwingSence)
             {
-                SwingLine = 2;
+                SwingLineL = 2;
             }
-            if (accelL.x >= -SwingSence && accelL.x <= SwingSence && accelL.y >= SwingSence && accelL.y <= SwingSence && accelL.z >= SwingSence)
-            {
-                SwingLine = 5;
-            }
+            
 
         }
         if (accelR.x >= SwingSence || accelR.x <= -SwingSence || accelR.y >= SwingSence || accelR.y <= -SwingSence || accelR.z >= SwingSence || accelR.z <= -SwingSence)
         {
-            Lswing = false;
             Rswing = true;
-            if (accelR.x >= SwingSence && accelR.y >= SwingSence)
-            {
-                SwingLine = 7;
-            }
-            if (accelR.x <= -SwingSence && accelR.y >= SwingSence)
-            {
-                SwingLine = 9;
-            }
-            if (accelR.x >= SwingSence && accelR.y <= -SwingSence)
-            {
-                SwingLine = 1;
-            }
-            if (accelR.x <= -SwingSence && accelR.y <= -SwingSence)
-            {
-                SwingLine = 3;
-            }
+            
             if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence)
             {
-                SwingLine = 8;
+                SwingLineR = 8;
             }
             if (accelR.x >= SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
             {
-                SwingLine = 4;
+                SwingLineR = 4;
             }
             if (accelR.x <= -SwingSence && accelR.y >= -SwingSence && accelR.y <= SwingSence)
             {
-                SwingLine = 6;
+                SwingLineR = 6;
             }
             if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y <= -SwingSence)
             {
-                SwingLine = 2;
+                SwingLineR = 2;
             }
-            if (accelR.x >= -SwingSence && accelR.x <= SwingSence && accelR.y >= SwingSence && accelR.y <= SwingSence && accelR.z >= SwingSence)
-            {
-                SwingLine = 5;
-            }
+            
         }
     }
     

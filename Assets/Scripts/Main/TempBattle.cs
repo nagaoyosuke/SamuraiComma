@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using SamuraiComma.Main.Manager;
 using UniRx;
 using Zenject;
@@ -37,7 +37,7 @@ public class TempBattle : MonoBehaviour
 
     private void Update()
     {
-        _joycon.Value = commandManager.SwingLine;
+        //_joycon.Value = commandManager.SwingLine;
     }
 
     public void OnClickedTempButton(){
