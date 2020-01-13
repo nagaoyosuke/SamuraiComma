@@ -132,6 +132,7 @@ namespace SamuraiComma.Main.WS
             catch (Exception e)
             {
                 Debug.LogError(e);
+                Debug.Log("サーバーへの接続が失敗しました。");
             }
         }
 
