@@ -87,6 +87,7 @@ namespace SamuraiComma.Main.WS
             MonoBehaviour.print(e.Data);
             giveJson = e.Data;
 
+            MessageCheck(e.Data);
             //data = e.Data;
             //give = JsonUtility.FromJson<give_stasu>(e.Data);
             //isGivedate = true;
@@ -154,7 +155,6 @@ namespace SamuraiComma.Main.WS
         {
             //stateでどのクラスでシリアライズするかみてる
             string state = JsonUtility.FromJson<JsonManager.Receive.BattleJson>(json).state;
-
             switch (state)
             {
                 case "Init":
@@ -168,6 +168,15 @@ namespace SamuraiComma.Main.WS
                     break;
                 case "Matching":
                     _giveMatching.Value = JsonUtility.FromJson<JsonManager.Receive.MatchingJson>(json);
+                    break;
+                case "MemberList":
+                    var a = JsonUtility.FromJson<JsonManager.Receive.MemberListJson>(json);
+                    print(a.state);
+                    print(a.Member);
+                    foreach(JsonManager.Receive.MemberJson m in a.Member)
+                    {
+                        print(m.nickName);
+                    }
                     break;
                 default:
                     print(JsonUtility.FromJson<JsonManager.Receive.APIJson>(json));
