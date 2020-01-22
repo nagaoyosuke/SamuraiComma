@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 using UniRx;
 using Zenject;
 
@@ -19,19 +18,14 @@ namespace SamuraiComma.Main.Manager
         [SerializeField] private PlayableDirector _fixPlayableDirector;
         [SerializeField] private PlayableDirector _victoryPlayableDirector;
 
-       //[SerializeField] private PlayableAsset _prepareDirectionPlayableAsset;
-       //[SerializeField] private PlayableAsset _fixDirectionPlayableAsset;
-       //[SerializeField] private PlayableAsset _victoryDirectionPlayableAsset;
-
         [Inject] private GameStateManager _gameStateManager;
 
         private void Start()
         {
-            //演出タイムなら、演出用タイムラインを再生する。
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Direction)
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
                              .Subscribe(_ => _preparePlayableDirector.Play(_preparePlayableDirector.playableAsset));
-
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.WaitingSignal)
@@ -39,8 +33,15 @@ namespace SamuraiComma.Main.Manager
 
             _gameStateManager.CurrentGameState
                              .FirstOrDefault(x => x == GameState.Finished)
-                             .Subscribe(_ => _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset));
+                             //delayかけないとなぜか動作しない。。
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
+                             .Subscribe(_ => _fixPlayableDirector.Stop());
 
+            //ここでplayerStateのisDeathで条件分岐
+            _gameStateManager.CurrentGameState
+                             .FirstOrDefault(x => x == GameState.Finished)
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
+                             .Subscribe(_ => _victoryPlayableDirector.Play(_victoryPlayableDirector.playableAsset));
         }
     }
 }

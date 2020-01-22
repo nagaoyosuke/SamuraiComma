@@ -31,10 +31,18 @@ namespace SamuraiComma.Main.WS
         private static ReactiveProperty<JsonManager.Receive.MatchingJson> _giveMatching = new ReactiveProperty<JsonManager.Receive.MatchingJson>();
         public static IReadOnlyReactiveProperty<JsonManager.Receive.MatchingJson> giveMatching => _giveMatching;
 
+        private static ReactiveProperty<JsonManager.Receive.APIJson> _giveAPI = new ReactiveProperty<JsonManager.Receive.APIJson>();
+        public static IReadOnlyReactiveProperty<JsonManager.Receive.APIJson> giveAPI => _giveAPI;
 
         private static bool isInit;
 
-        void Awake()
+        /// <summary>
+        /// サーバーにデータを送信するストリームソース
+        /// </summary>
+        private static Subject<Unit> _onSent = new Subject<Unit>();
+        public static IObservable<Unit> onSent => _onSent;
+
+        private void Awake()
         {
             DontDestroyOnLoad(transform.gameObject);
             Connect();
@@ -84,35 +92,14 @@ namespace SamuraiComma.Main.WS
         private static void OnMessage(object sender, MessageEventArgs e)
         {
             time();
-            MonoBehaviour.print(e.Data);
+            //1119コメントアウト
+            //MonoBehaviour.print(e.Data);
             giveJson = e.Data;
 
-            MessageCheck(e.Data);
-            //data = e.Data;
-            //give = JsonUtility.FromJson<give_stasu>(e.Data);
-            //isGivedate = true;
-            //if (give.name == "server")
-            //{
-            //    serverMessage = give.server;
-            //}
-            //if (lobby != null)
-            //{
-            //    lobby.GiveDataCheck();
-            //}
-            //if (Silentcave != null)
-            //{
-            //    Silentcave.GiveDataCheck();
+            //1119 toyoda
+            MessageCheck(giveJson);
 
-            //    //サーバから送られてきた情報がアイテムの情報の場合
-            //    if (give.name == "item")
-            //    {
-            //        if (item != null)
-            //        {
-            //            Debug.Log(give.isChanged);
-            //            item.ItemSet(give.job, new Vector3(give.x, give.y, give.z), give.isChanged);
-            //        }
-            //    }
-            //}
+
         }
 
         private static void OnClose(object sender, CloseEventArgs e)
@@ -128,7 +115,9 @@ namespace SamuraiComma.Main.WS
         private static void time()
         {
             sw.Stop();
-            Debug.Log(sw.ElapsedMilliseconds + "ms");
+            //コメントアウトtoyoda1119
+             //Debug.Log(sw.ElapsedMilliseconds + "ms");
+            //_ping.Value = sw.ElapsedMilliseconds;
         }
 
         public static void Send(string json)
@@ -137,16 +126,13 @@ namespace SamuraiComma.Main.WS
             {
                 sw.Restart();
                 ws.Send(json);
-                //isErr = false;
+                _onSent.OnNext(Unit.Default);
+
             }
             catch (Exception e)
             {
-                //isErr = true;
-                //if (isReco)
-                //{
-                //    Connect();
-                //}
                 Debug.LogError(e);
+                Debug.Log("サーバーへの接続が失敗しました。");
             }
         }
 
@@ -155,6 +141,7 @@ namespace SamuraiComma.Main.WS
         {
             //stateでどのクラスでシリアライズするかみてる
             string state = JsonUtility.FromJson<JsonManager.Receive.BattleJson>(json).state;
+
             switch (state)
             {
                 case "Init":
@@ -170,16 +157,16 @@ namespace SamuraiComma.Main.WS
                     _giveMatching.Value = JsonUtility.FromJson<JsonManager.Receive.MatchingJson>(json);
                     break;
                 case "MemberList":
-                    var a = JsonUtility.FromJson<JsonManager.Receive.MemberListJson>(json);
-                    print(a.state);
-                    print(a.Member);
-                    foreach(JsonManager.Receive.MemberJson m in a.Member)
+                    var mem = JsonUtility.FromJson<JsonManager.Receive.MemberListJson>(json);
+                    print(mem.state);
+                    print(mem.Member);
+                    foreach (JsonManager.Receive.MemberJson m in mem.Member)
                     {
                         print(m.nickName);
                     }
                     break;
                 default:
-                    print(JsonUtility.FromJson<JsonManager.Receive.APIJson>(json));
+                    _giveAPI.Value = JsonUtility.FromJson<JsonManager.Receive.APIJson>(json);
                     break;
             }
 
@@ -188,12 +175,6 @@ namespace SamuraiComma.Main.WS
 
         void OnApplicationQuit()
         {
-
-            //send.ready = "no";
-            //send.ID = kari_ID;
-            //send.job = myjob;
-            //json = JsonUtility.ToJson(send);
-            //NetSynthesis.Send(json);
 
             Resources.UnloadUnusedAssets();
 

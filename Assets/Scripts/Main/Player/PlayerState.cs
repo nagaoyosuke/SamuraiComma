@@ -14,6 +14,7 @@ namespace SamuraiComma.Main.Player
     {
         [SerializeField] public BoolReactiveProperty canQuickDraw = new BoolReactiveProperty(true);
         [SerializeField] public BoolReactiveProperty canBattle = new BoolReactiveProperty(false);
+        [SerializeField] public BoolReactiveProperty isDeath = new BoolReactiveProperty(false);
 
     }
 }

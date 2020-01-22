@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UniRx;
-using Zenject;
-using SamuraiComma.Main.Manager;
 
 namespace SamuraiComma.Main.Camera
 {
@@ -17,13 +15,13 @@ namespace SamuraiComma.Main.Camera
     public class ObservablePrepareTimelineTrigger : MonoBehaviour, ITimeControl
     {
         [SerializeField] private BoolReactiveProperty _isFinishedDirection = new BoolReactiveProperty(false);
+
         public IReadOnlyReactiveProperty<bool> isFinishedDirection => _isFinishedDirection;
 
 
         public void OnControlTimeStart()
         {
             _isFinishedDirection.SetValueAndForceNotify(false);
-
         }
 
         public void OnControlTimeStop()
@@ -37,5 +35,3 @@ namespace SamuraiComma.Main.Camera
 
     }
 }
-
-

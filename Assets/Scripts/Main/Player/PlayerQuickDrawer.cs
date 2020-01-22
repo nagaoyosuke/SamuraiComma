@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SamuraiComma.Main.Inputs;
 using SamuraiComma.Main.Manager;
 using UniRx;
@@ -19,7 +17,7 @@ namespace SamuraiComma.Main.Player
 
         [SerializeField] private KeyboardInputProvider _inputProvider;
         [SerializeField] private PlayerState _playerState;
-        [SerializeField] private ScreenFader screenFader;
+        [Inject] private ScreenFader _screenFader;
         [SerializeField] private readonly int _otetsukiTime = 2;
         [Inject] private GameStateManager _gameStateManager;
         [Inject] private TimeManager _timeManager;
@@ -46,18 +44,13 @@ namespace SamuraiComma.Main.Player
 
             if (_timeManager.signalTimer.Value <= 0){
                 Sound.PlaySe("syakin");
-                screenFader.isFadeOutTranslucent = true;
+                _screenFader.isFadeOutTranslucent = true;
                 temp.setsunaButton.SetActive(true);
                 _playerState.canBattle.Value = true;
 
             } else {
                 StartCoroutine(DelayClass.DelayCoroutin(60*_otetsukiTime, () => _playerState.canQuickDraw.Value = true));
             }
-
-
         }
-
     }
 }
-
-

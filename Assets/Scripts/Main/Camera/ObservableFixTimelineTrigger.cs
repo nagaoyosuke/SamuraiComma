@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -21,6 +21,7 @@ namespace SamuraiComma.Main.Camera
 
         public void OnControlTimeStart()
         {
+            _isFinishedDirection.SetValueAndForceNotify(false);
         }
 
         public void OnControlTimeStop()

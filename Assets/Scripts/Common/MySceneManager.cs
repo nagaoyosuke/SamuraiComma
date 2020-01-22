@@ -6,20 +6,11 @@ using UnityEngine.SceneManagement;
 public class MySceneManager : SingletonMonoBehaviour<MySceneManager> {
 
 	public static void GoTitle(){
-		SceneManager.LoadScene("Title");
+		SceneManager.LoadScene("TitleScene");
 	}
 
     public static void GoMain()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("MainScene");
     }
-
-	public static void GoResult(){
-		SceneManager.LoadScene("Result");
-	}
-
-	public static void GoExplanatoryText(){
-		SceneManager.LoadScene("ExplanatoryText");
-	}
-
 }

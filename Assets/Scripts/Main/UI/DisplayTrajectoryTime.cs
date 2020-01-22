@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using Zenject;
@@ -19,9 +17,12 @@ namespace SamuraiComma.Main.UI
         [SerializeField] private Text _timeLimitText;
         [Inject] private TimeManager _timeCounter;
         [Inject] private GameStateManager _gameStateManager;
+        [Inject] private SendDataStateManager _sendDataManager;
 
         private void Start()
         {
+
+            _timeLimitText.enabled = false;
 
             _gameStateManager.CurrentGameState
                              .SkipLatestValueOnSubscribe()
@@ -38,10 +39,9 @@ namespace SamuraiComma.Main.UI
                         .Where(x => x <= 0)
                         .Subscribe(_ => _timeLimitText.enabled = false);
 
-            //ジョイコンで斬れたら非表示にする処理
+            _sendDataManager.battleSendState
+                            .Where(x => x == SendDataState.OnSent)
+                            .Subscribe(_ => _timeLimitText.enabled = false);
         }
-
     }
 }
-
-

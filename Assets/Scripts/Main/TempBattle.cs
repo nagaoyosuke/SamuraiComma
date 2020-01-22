@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using SamuraiComma.Main.Manager;
 using UniRx;
 using Zenject;
@@ -10,56 +7,45 @@ using Zenject;
 public class TempBattle : MonoBehaviour
 {
     public GameObject setsunaButton;
-    public UnityChanAnimationController unityChanAnimation;
-    public UnityChanAnimationController opponentUnityChanAnimation;
-
-    public ScreenFader screenFader;
-    public TempData temp;
-
     public CommandManager commandManager;
+
+    [Inject] private ScreenFader _screenFader;
     [Inject] private GameStateManager _gameStateManager;
+    [Inject] private TimeManager _timeManager;
+    [Inject] private SendDataStateManager _sendDataStateManager;
 
     private IntReactiveProperty _joycon = new IntReactiveProperty(0);
     public IReadOnlyReactiveProperty<int> joycon => _joycon;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        Sound.PlayBgm("wind");
-
         //joyconを振ると動作(仮)
         _joycon
             .DistinctUntilChanged()
             .Where(_ => _gameStateManager.CurrentGameState.Value == GameState.Battle)
             .Subscribe(_ => OnClickedTempButton());
 
+        _sendDataStateManager.battleSendState
+                             .DistinctUntilChanged()
+                             .Where(x => x == SendDataState.OnSent)
+                             .Subscribe(_ => _screenFader.isFadeOut = true);
 
+        _timeManager.trajectoryTimer
+                    .Where(x => x <= 0.0f)
+                    .Subscribe(_=>setsunaButton.SetActive(false));
     }
 
     private void Update()
     {
-        _joycon.Value = commandManager.SwingLine;
-
+        //_joycon.Value = commandManager.SwingLine;
     }
 
     public void OnClickedTempButton(){
+
         Sound.PlaySe("hero01");
-        screenFader.isFadeIn = true;//連打するとフェイドインされないバグ
         setsunaButton.SetActive(false);
-
-        temp.TempServer(1*60);
-        temp.TempServer(5*60);
+        JsonManager.Send.BattleJson json3 = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
+        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
     }
 
-
-    public void BeBeaten(){
-        unityChanAnimation.PlayAnimation("isAttack");
-        StartCoroutine(DelayClass.DelayCoroutin(80, () => opponentUnityChanAnimation.PlayAnimation("isDamaged")));
-        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
-
-        opponentUnityChanAnimation.PlayAnimation("isAttack");
-        StartCoroutine(DelayClass.DelayCoroutin(80, () => unityChanAnimation.PlayAnimation("isDamaged")));
-        StartCoroutine(DelayClass.DelayCoroutin(90, () => Sound.PlaySe("itawari01")));
-
-    }
 }

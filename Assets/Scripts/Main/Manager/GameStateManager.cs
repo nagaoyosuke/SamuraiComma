@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 using UniRx;
+using UniRx.Async;
 using SamuraiComma.Main.Camera;
 using SamuraiComma.Main.Player;
+using SamuraiComma.Main.WS;
 using Zenject;
-using UnityEngine.Timeline;
-using UnityEngine.Assertions;
-using System.Linq;
 
 namespace SamuraiComma.Main.Manager
 {
@@ -28,19 +27,21 @@ namespace SamuraiComma.Main.Manager
         [SerializeField] private PlayerState _playerState;
 
         [Inject] private TimelineSwitcher _timelineSwitcher;
-
-        //仮
-        [SerializeField] private TempData tempData;
+        [Inject] private SendDataStateManager _sendDataStateManager;
+        [Inject] private ScreenFader _screenFader;
 
         private void Start()
         {
+            //サーバーにデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
+            WSManager.giveInit
+                     .SkipLatestValueOnSubscribe()
+                     .Where(_ => CurrentGameState.Value == GameState.Initializing)
+                     .Subscribe(_ =>
+            {
+                _screenFader.isFadeIn = true;
+                _gameState.SetValueAndForceNotify(GameState.Direction);
+            });
 
-            //サーバーにデータを送受信したら
-            tempData.tempserverflag
-                    .SkipLatestValueOnSubscribe()
-                    .DistinctUntilChanged()
-                    .Where(x => x == false && CurrentGameState.Value == GameState.Initializing)
-                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Direction));
 
             //directionの演出が終わったら
             _prepareTimelineTrigger.isFinishedDirection
@@ -54,19 +55,34 @@ namespace SamuraiComma.Main.Manager
                         .Where(x => x == true && CurrentGameState.Value == GameState.WaitingSignal)
                         .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Battle));
 
-            //サーバーにデータを送受信したら
-            tempData.tempserverflag
-                    .DistinctUntilChanged()
-                    .Where(x => x == false && CurrentGameState.Value == GameState.Battle)
-                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Finished));
+            //サーバーからデータを受信したら
+            WSManager.giveBattle
+                        .DistinctUntilChanged()
+                        .Where(_ => CurrentGameState.Value == GameState.Battle)
+                        .Subscribe(_ => GameStateFinishedAsync().Forget());
+
 
             //アニメーション終了後
-            _victoryTimelineTrigger.isFinishedDirection
+            _victoryTimelineTrigger.isLoopingPlayerAnim
                                    .DistinctUntilChanged()
                                    .Where(x => x == true && CurrentGameState.Value == GameState.Finished)
                                    .Subscribe(_ => _gameState.SetValueAndForceNotify(GameState.Result));
+
+
+        }
+
+        /// <summary>
+        /// バトルデータをサーバーに送信するまで待機し、画面暗転した後、GameStateをFinishedにする。
+        /// </summary>
+        /// <returns>The state finished async.</returns>
+        private async UniTaskVoid GameStateFinishedAsync()
+        {
+            await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
+            await UniTask.WaitWhile(() => _screenFader.isFadeOut);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+
+            _screenFader.isFadeIn = true;
+            _gameState.SetValueAndForceNotify(GameState.Finished);
         }
     }
 }
-
-
