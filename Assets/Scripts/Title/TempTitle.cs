@@ -9,10 +9,4 @@ public class TempTitle : MonoBehaviour
     {
         Sound.PlayBgm("wind");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
