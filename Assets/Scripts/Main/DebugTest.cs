@@ -7,7 +7,6 @@ using Zenject;
 using SamuraiComma.Main.WS;
 using SamuraiComma.Main.Manager;
 
-
 /// <summary>
 /// 2019/11/19 toyoda
 /// サーバーからもらうJsonを監視。
@@ -20,12 +19,6 @@ public class DebugTest : MonoBehaviour
 
     private void Start()
     {
-        /*
-        WSManager.ping
-                 .DistinctUntilChanged()
-                 .Subscribe(x => _text.text = x.ToString() + "ms");
-                 */
-
         WSManager.giveInit
                  .SkipLatestValueOnSubscribe()
                  .DistinctUntilChanged()
@@ -51,7 +44,9 @@ public class DebugTest : MonoBehaviour
                  .DistinctUntilChanged()
                  .Subscribe(json => print(json.ToJson()));
 
-
-
+        WSManager.giveDirectMessage
+                 .SkipLatestValueOnSubscribe()
+                 .DistinctUntilChanged()
+                 .Subscribe(json => print(json.ToJson()));
     }
 }

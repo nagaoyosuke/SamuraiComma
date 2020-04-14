@@ -32,9 +32,9 @@ namespace SamuraiComma.Main.Manager
 
         private void Start()
         {
-            //サーバーにデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
+            //サーバーからデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
             WSManager.giveInit
-                     .SkipLatestValueOnSubscribe()
+                     //.SkipLatestValueOnSubscribe()
                      .Where(_ => CurrentGameState.Value == GameState.Initializing)
                      .Subscribe(_ =>
             {

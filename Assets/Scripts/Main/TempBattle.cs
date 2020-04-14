@@ -40,12 +40,15 @@ public class TempBattle : MonoBehaviour
         //_joycon.Value = commandManager.SwingLine;
     }
 
+    /// <summary>
+    /// joy-conで斬る処理(仮)ボタンを押した時の処理。
+    /// </summary>
     public void OnClickedTempButton(){
 
         Sound.PlaySe("hero01");
         setsunaButton.SetActive(false);
-        JsonManager.Send.BattleJson json3 = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
-        SamuraiComma.Main.WS.WSManager.Send(json3.ToJson());
+        var battleJson = new JsonManager.Send.BattleJson(attackTime: _timeManager._trajectoryTimeLimit - _timeManager.trajectoryTimer.Value);
+        SamuraiComma.Main.WS.WSManager.Send(battleJson.ToJson());
     }
 
 }

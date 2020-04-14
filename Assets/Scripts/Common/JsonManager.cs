@@ -116,6 +116,7 @@ namespace SamuraiComma.Main.Manager
 
             }
 
+
             /// <summary>
             /// 未使用
             /// </summary>
@@ -159,6 +160,34 @@ namespace SamuraiComma.Main.Manager
                 {
                     this.state = "Battle";
                     this.attackTime = attackTime;
+                }
+            }
+
+            /// <summary>
+            /// メッセージを相手のクライアントに送ることができる。
+            /// </summary>
+            public class DirectMessageJson : JsonMethod
+            {
+                public string state;
+                /// <summary>
+                /// 送信先のUserID
+                /// </summary>
+                public int destinationUserID;
+                /// <summary>
+                /// 送信先のUserName
+                /// </summary>
+                public string destinationUserName;
+                /// <summary>
+                /// メッセージ内容
+                /// </summary>
+                public string messageText;
+
+                public DirectMessageJson(int userID, string userName, string text)
+                {
+                    this.state = "DirectChat";
+                    this.destinationUserID = userID;
+                    this.destinationUserName = userName;
+                    this.messageText = text;
                 }
             }
 
@@ -280,12 +309,13 @@ namespace SamuraiComma.Main.Manager
                 /// </summary>
                 public float startTime;
 
-                public InitializingJson(string userName, string nickName, string streetAddress)
+                public InitializingJson(string userName, string nickName, string streetAddress,float startTime)
                 {
                     this.state = "Init";
                     this.userName = userName;
                     this.nickName = nickName;
                     this.streetAddress = streetAddress;
+                    this.startTime = startTime;
                 }
             }
 
@@ -360,6 +390,25 @@ namespace SamuraiComma.Main.Manager
                     this.nickName = nickName;
                     this.streetAddress = streetAddress;
                 }
+            }
+
+            /// <summary>
+            /// メッセージが送られてくる。
+            /// </summary>
+            public class DirectMessageJson : JsonMethod
+            {
+                /// <summary>
+                /// 送信元のUserID
+                /// </summary>
+                public int senderUserID;
+                /// <summary>
+                /// 送信元のUserName
+                /// </summary>
+                public string senderUserName;
+                /// <summary>
+                /// メッセージ内容
+                /// </summary>
+                public string messageText;
             }
 
             /// <summary>

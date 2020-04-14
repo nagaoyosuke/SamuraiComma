@@ -65,18 +65,5 @@ namespace SamuraiComma.Main.UI
                 _resultOperationCommands.SetActive(true);
             });
         }
-
-
-        private void baw(Sprite[]images,string[]operations)
-        {
-            foreach(var operationCommand in images.Zip(operations,Tuple.Create))
-            {
-                print(operationCommand.Item1);
-
-            }
-
-
-        }
     }
 }
-

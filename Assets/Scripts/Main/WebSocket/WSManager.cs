@@ -34,6 +34,15 @@ namespace SamuraiComma.Main.WS
         private static ReactiveProperty<JsonManager.Receive.APIJson> _giveAPI = new ReactiveProperty<JsonManager.Receive.APIJson>();
         public static IReadOnlyReactiveProperty<JsonManager.Receive.APIJson> giveAPI => _giveAPI;
 
+        /// <summary>
+        /// The give member list.
+        /// </summary>
+        private static ReactiveProperty<JsonManager.Receive.MemberListJson> _giveMemberList = new ReactiveProperty<JsonManager.Receive.MemberListJson>();
+        public static IReadOnlyReactiveProperty<JsonManager.Receive.MemberListJson> giveMemberList => _giveMemberList;
+
+        private static ReactiveProperty<JsonManager.Receive.DirectMessageJson> _giveDirectMessage = new ReactiveProperty<JsonManager.Receive.DirectMessageJson>();
+        public static IReadOnlyReactiveProperty<JsonManager.Receive.DirectMessageJson> giveDirectMessage => _giveDirectMessage;
+
         private static bool isInit;
 
         /// <summary>
@@ -110,6 +119,8 @@ namespace SamuraiComma.Main.WS
         private static void OnError(object sender, ErrorEventArgs e)
         {
             Debug.Log(e.Message);
+            Debug.Log(e.Exception.Message);
+
         }
 
         private static void time()
@@ -157,20 +168,15 @@ namespace SamuraiComma.Main.WS
                     _giveMatching.Value = JsonUtility.FromJson<JsonManager.Receive.MatchingJson>(json);
                     break;
                 case "MemberList":
-                    var mem = JsonUtility.FromJson<JsonManager.Receive.MemberListJson>(json);
-                    print(mem.state);
-                    print(mem.Member);
-                    foreach (JsonManager.Receive.MemberJson m in mem.Member)
-                    {
-                        print(m.nickName);
-                    }
+                    _giveMemberList.Value = JsonUtility.FromJson<JsonManager.Receive.MemberListJson>(json);
+                    break;
+                case "DirectChat":
+                    _giveDirectMessage.Value = JsonUtility.FromJson<JsonManager.Receive.DirectMessageJson>(json);
                     break;
                 default:
                     _giveAPI.Value = JsonUtility.FromJson<JsonManager.Receive.APIJson>(json);
                     break;
             }
-
-            //Debug.Log(state);
         }
 
         void OnApplicationQuit()
