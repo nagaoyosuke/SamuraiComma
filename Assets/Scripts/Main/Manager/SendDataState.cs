@@ -4,7 +4,6 @@
     /// 2019/11/27 toyoda
     /// サーバーへのデータ送信状態のenum
     /// </summary>
-
     public enum SendDataState
     {
         /// <summary>

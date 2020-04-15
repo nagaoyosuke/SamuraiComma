@@ -172,22 +172,22 @@ namespace SamuraiComma.Main.Manager
                 /// <summary>
                 /// 送信先のUserID
                 /// </summary>
-                public int destinationUserID;
+                public int oppID;
                 /// <summary>
                 /// 送信先のUserName
                 /// </summary>
-                public string destinationUserName;
+                public string oppName;
                 /// <summary>
                 /// メッセージ内容
                 /// </summary>
-                public string messageText;
+                public string text;
 
                 public DirectMessageJson(int userID, string userName, string text)
                 {
                     this.state = "DirectChat";
-                    this.destinationUserID = userID;
-                    this.destinationUserName = userName;
-                    this.messageText = text;
+                    this.oppID = userID;
+                    this.oppName = userName;
+                    this.text = text;
                 }
             }
 
@@ -201,14 +201,17 @@ namespace SamuraiComma.Main.Manager
                 /// </summary>
                 public string state;
 
+                /// <summary>
+                /// 必要であれば
+                /// </summary>
                 public int userID;
 
                 /// <summary>
-                /// 名前
+                /// 必要であれば
                 /// </summary>
                 public string userName;
 
-                public APIJson(string state,int userID,string userName)
+                public APIJson(string state, int userID = -99, string userName = "Noname")
                 {
                     this.state = state;
                     this.userID = userID;
@@ -397,18 +400,27 @@ namespace SamuraiComma.Main.Manager
             /// </summary>
             public class DirectMessageJson : JsonMethod
             {
+                public string state;
                 /// <summary>
                 /// 送信元のUserID
                 /// </summary>
-                public int senderUserID;
+                public int oppID;
                 /// <summary>
                 /// 送信元のUserName
                 /// </summary>
-                public string senderUserName;
+                public string oppName;
                 /// <summary>
                 /// メッセージ内容
                 /// </summary>
-                public string messageText;
+                public string text;
+
+                public DirectMessageJson(int userID, string userName, string text)
+                {
+                    this.state = "DirectChat";
+                    this.oppID = userID;
+                    this.oppName = userName;
+                    this.text = text;
+                }
             }
 
             /// <summary>

@@ -33,26 +33,24 @@ namespace SamuraiComma.Title
             foreach (RectTransform content in onlinePlayerList.transform)
             {
                 //サーバーのメンバーリストの中の名前が１つもunity上のobjectの名前と一致しない場合
-                if (!WSManager.giveMemberList.Value.Member.Any(value => value.nickName + "/" + value.streetAddress == content.name))
+                if (!WSManager.giveMemberList.Value.Member.Any(d => d.userName + "/" + d.userID.ToString() == content.name))
                 {
                     Destroy(content.gameObject);
                 }
             }
 
-            //サーバー上にデータが存在するが、画面にアカウントが表示されていない場合
+            //サーバー上のプレイヤー一覧
             foreach (var m in WSManager.giveMemberList.Value.Member)
             {
-                if (GameObject.Find(m.nickName + "/" + m.streetAddress) == null)
+                //のIDと一致するゲームオブジェクトが存在しない場合、生成する。
+                if (GameObject.Find(m.userName + "/" + m.userID) == null)
                 {
-                    var playerContent = Instantiate(onlinePlayerListContent, transform.position, Quaternion.identity);
+                    var playerObject = Instantiate(onlinePlayerListContent, transform.position, Quaternion.identity);
 
-                    playerContent.name = m.nickName + "/" + m.streetAddress;
-                    playerContent.transform.SetParent(onlinePlayerList.transform, false);
-                    playerContent.transform.Find("PlayerName").GetComponent<Text>().text = m.nickName + "/" + m.streetAddress;
-
-                    var playerStatus = playerContent.GetComponent<LobbyPlayerStatus>();
-
-                    playerStatus.Init(m.userID, m.userName, m.nickName, m.streetAddress);
+                    playerObject.name = m.userName + "/" + m.userID;
+                    playerObject.transform.SetParent(onlinePlayerList.transform, false);
+                    playerObject.transform.Find("PlayerName").GetComponent<Text>().text = m.userName + " / " + m.streetAddress;
+                    playerObject.GetComponent<UserAccountStatus>().Init(m.userID, m.userName, m.nickName, m.streetAddress);
                 }
             }
         }

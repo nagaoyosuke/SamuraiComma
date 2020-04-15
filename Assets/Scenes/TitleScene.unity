@@ -206,6 +206,7 @@ RectTransform:
   - {fileID: 1712863007}
   - {fileID: 1300511803}
   - {fileID: 1826876200}
+  - {fileID: 814406813}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -312,7 +313,6 @@ GameObject:
   m_Component:
   - component: {fileID: 657735295}
   - component: {fileID: 657735294}
-  - component: {fileID: 657735296}
   - component: {fileID: 657735297}
   m_Layer: 0
   m_Name: Manager
@@ -347,18 +347,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &657735296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657735293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da7d67dc0ec44d9fb14132f085e0fba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &657735297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onlinePlayerList: {fileID: 752830303}
-  onlinePlayerListContent: {fileID: 8629033084286685246}
+  onlinePlayerListContent: {fileID: 8629033084415662792, guid: 50e961dd3229342e38b5525263863fa5,
+    type: 3}
 --- !u!1 &730669073
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000065724176}
+  m_AnchoredPosition: {x: 0, y: 0.000035255394}
   m_SizeDelta: {x: 0, y: 688.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &752830305
@@ -603,7 +592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &814406813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -615,13 +604,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1826876200}
-  m_RootOrder: 2
+  m_Father: {fileID: 100760102}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -4.4000244, y: -2.2000122}
-  m_SizeDelta: {x: 1131.7, y: 239.50002}
+  m_SizeDelta: {x: 122.099976, y: 119.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &814406814
 MonoBehaviour:
@@ -918,7 +907,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 792481266}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1176,7 +1165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 713, y: -2.2}
+  m_AnchoredPosition: {x: 568, y: -115}
   m_SizeDelta: {x: 228.8, y: 165.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1300511804
@@ -1219,8 +1208,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 657735296}
-        m_MethodName: Button
+      - m_Target: {fileID: 657735297}
+        m_MethodName: OnPushedUpdateLobbyPlayerListButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1609,7 +1598,6 @@ RectTransform:
   m_Children:
   - {fileID: 848219254}
   - {fileID: 876467043}
-  - {fileID: 814406813}
   m_Father: {fileID: 100760102}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1800,26 +1788,5 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8629033084415662794, guid: 50e961dd3229342e38b5525263863fa5,
-        type: 3}
-      propertyPath: m_PreferredWidth
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8629033084415662794, guid: 50e961dd3229342e38b5525263863fa5,
-        type: 3}
-      propertyPath: m_FlexibleWidth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8629033084484040744, guid: 50e961dd3229342e38b5525263863fa5,
-        type: 3}
-      propertyPath: m_Text
-      value: Yutaka Baba / Tokyo
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50e961dd3229342e38b5525263863fa5, type: 3}
---- !u!1 &8629033084286685246 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8629033084415662792, guid: 50e961dd3229342e38b5525263863fa5,
-    type: 3}
-  m_PrefabInstance: {fileID: 8629033084286685245}
-  m_PrefabAsset: {fileID: 0}

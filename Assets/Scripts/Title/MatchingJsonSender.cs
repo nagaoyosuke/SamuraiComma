@@ -16,8 +16,8 @@ namespace SamuraiComma.Title
         /// </summary>
         public void OnPushedSendDuelLetterButton()
         {
-            var oppStatus = this.gameObject.transform.parent.GetComponent<LobbyPlayerStatus>();
-            var MatchingJson = new JsonManager.Send.MatchingJson(oppID: oppStatus.userID, oppName: oppStatus.name, isBattle: true);
+            var oppStatus = this.gameObject.transform.parent.GetComponent<UserAccountStatus>();
+            var MatchingJson = new JsonManager.Send.MatchingJson(oppID: oppStatus.userID, oppName: oppStatus.UserName, isBattle: true);
             WSManager.Send(MatchingJson.ToJson());
             print("matchingJsonを送信しました。");
         }

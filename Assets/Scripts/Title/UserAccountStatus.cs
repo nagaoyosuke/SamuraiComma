@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// プレイヤーの部屋のコンポーネント
 /// </summary>
-public class LobbyPlayerStatus :MonoBehaviour
+public class UserAccountStatus :MonoBehaviour
 {
     /// <summary>
     /// 初期化済みかどうか

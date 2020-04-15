@@ -79,16 +79,9 @@ namespace SamuraiComma.Main.WS
         public static void Connect(string url = "ws://127.0.0.1:12345")
         {
             ws = new WebSocket(url);
-
             Initialization();
-
-            //ws = new WebSocket("wss://pythonwebsockettest.herokuapp.com");
-
             ws.Connect();
 
-            //ws.ConnectAsync();
-
-            //ws.SendAsync("BALUS",value => print("send" + value));
 
         }
 
@@ -101,14 +94,10 @@ namespace SamuraiComma.Main.WS
         private static void OnMessage(object sender, MessageEventArgs e)
         {
             time();
-            //1119コメントアウト
-            //MonoBehaviour.print(e.Data);
             giveJson = e.Data;
 
             //1119 toyoda
             MessageCheck(giveJson);
-
-
         }
 
         private static void OnClose(object sender, CloseEventArgs e)
@@ -172,6 +161,9 @@ namespace SamuraiComma.Main.WS
                     break;
                 case "DirectChat":
                     _giveDirectMessage.Value = JsonUtility.FromJson<JsonManager.Receive.DirectMessageJson>(json);
+                    break;
+                case "Error":
+                    print("エラー:" + JsonUtility.FromJson<JsonManager.Receive.ErrorJson>(json).message);
                     break;
                 default:
                     _giveAPI.Value = JsonUtility.FromJson<JsonManager.Receive.APIJson>(json);

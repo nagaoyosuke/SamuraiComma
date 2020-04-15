@@ -35,6 +35,12 @@ namespace SamuraiComma.Main.UI
                             .Delay(System.TimeSpan.FromSeconds(0.01f))
                             .Subscribe(_ => _text.enabled = true);
 
+            _sendDataManager.rematchSendState
+                            .DistinctUntilChanged()
+                            .Where(x => x == SendDataState.OnSent)
+                            .Delay(System.TimeSpan.FromSeconds(0.01f))
+                            .Subscribe(_ => _text.enabled = true);
+
             // データの送受信が完了したらGameStateはDirectionになるので同時に非表示にする。
             _gameStateManager.CurrentGameState
                              .DistinctUntilChanged()
@@ -48,7 +54,14 @@ namespace SamuraiComma.Main.UI
                              .Where(x => x == GameState.Finished)
                              .Delay(System.TimeSpan.FromSeconds(0.01f))
                              .Subscribe(_ => _text.enabled = false);
-                             
+
+            //再戦したらシーンを読み込み直し、GameStateはInitになるので同時に非表示にする。
+            _gameStateManager.CurrentGameState
+                             .DistinctUntilChanged()
+                             .Where(x => x == GameState.Initializing)
+                             .Delay(System.TimeSpan.FromSeconds(0.01f))
+                             .Subscribe(_ => _text.enabled = false);
+
         }
     }
 }

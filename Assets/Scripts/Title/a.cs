@@ -10,27 +10,27 @@ namespace SamuraiComma.Title
     /// </summary>
     public class a : MonoBehaviour
     {
-        private bool tanomu = false;
+        private bool isMatched = false;
 
         private void Start()
         {
-            var loginJson = new JsonManager.Send.LoginJson(101, "Unity", "Unity", "Hirakata");
+            var loginJson = new JsonManager.Send.LoginJson(2, "tanaka", "samurai comma", "Japan");
             WSManager.Send(loginJson.ToJson());
 
             WSManager.giveMatching
                      .SkipLatestValueOnSubscribe()
                      .DistinctUntilChanged()
-                     .Subscribe(_ => tanomu = true);
+                     .Subscribe(_ => isMatched = true);
 
         }
 
         private void Update()
         {
             //Unity Api(GameObject.Find()など)を別のthreadで使えないのでUpdateで処理してる。
-            if (tanomu)
+            if (isMatched)
             {
                 MySceneManager.GoMain();
-                tanomu = false;
+                isMatched = false;
             }
         }
     }
