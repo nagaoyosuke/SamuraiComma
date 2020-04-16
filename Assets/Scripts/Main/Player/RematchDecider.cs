@@ -27,7 +27,7 @@ namespace SamuraiComma.Main.Player
 
         private JsonManager.Send.DirectMessageJson _messageJson;
         /// <summary>
-        /// 実行済みであるか
+        /// ボタン入力が実行済みであるか
         /// </summary>
         private bool isExecuted = false;
         /// <summary>
@@ -47,7 +47,6 @@ namespace SamuraiComma.Main.Player
 
                     _messageJson = new JsonManager.Send.DirectMessageJson(_matchingInfo.opponentAccount.userID, _matchingInfo.opponentAccount.UserName, "Accept");
                     WSManager.Send(_messageJson.ToJson());
-
                     RematchAsync().Forget();
                 });
 

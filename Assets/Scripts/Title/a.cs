@@ -14,7 +14,9 @@ namespace SamuraiComma.Title
 
         private void Start()
         {
-            var loginJson = new JsonManager.Send.LoginJson(2, "tanaka", "samurai comma", "Japan");
+            var loginJson = new JsonManager.Send.LoginJson(2, "田中政志", "コンマに？", "日本/Japan");
+            //var loginJson = new JsonManager.Send.LoginJson(1, "Umehara", "The Comma01", "Japan");
+
             WSManager.Send(loginJson.ToJson());
 
             WSManager.giveMatching

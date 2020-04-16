@@ -1,8 +1,10 @@
 using System;
+using System.Threading;
 using System.Linq;
 using UnityEngine;
 using UniRx;
 using UniRx.Async;
+using UniRx.Async.Triggers;
 using SamuraiComma.Main.Camera;
 using SamuraiComma.Main.Player;
 using SamuraiComma.Main.WS;
@@ -32,10 +34,10 @@ namespace SamuraiComma.Main.Manager
 
         private void Start()
         {
-            //サーバーからデータを受信したら(送信はLogin時のプレイヤーIDなどのデータでサーバーサイドがdbから検索する)
+            //サーバーからデータを受信したら
             WSManager.giveInit
-                     //.SkipLatestValueOnSubscribe()
                      .Where(_ => CurrentGameState.Value == GameState.Initializing)
+
                      .Subscribe(_ =>
             {
                 _screenFader.isFadeIn = true;
@@ -57,10 +59,10 @@ namespace SamuraiComma.Main.Manager
 
             //サーバーからデータを受信したら
             WSManager.giveBattle
-                        .DistinctUntilChanged()
+                        //.DistinctUntilChanged()
                         .Where(_ => CurrentGameState.Value == GameState.Battle)
-                        .Subscribe(_ => GameStateFinishedAsync().Forget());
-
+                     .Subscribe(_ => GameStateFinishedAsync().Forget());
+            //this.GetCancellationTokenOnDestroy()
 
             //アニメーション終了後
             _victoryTimelineTrigger.isLoopingPlayerAnim
@@ -75,11 +77,16 @@ namespace SamuraiComma.Main.Manager
         /// バトルデータをサーバーに送信するまで待機し、画面暗転した後、GameStateをFinishedにする。
         /// </summary>
         /// <returns>The state finished async.</returns>
-        private async UniTaskVoid GameStateFinishedAsync()
+        private async UniTaskVoid GameStateFinishedAsync()//CancellationToken token)
         {
+            print("1");
             await UniTask.WaitUntil(() => _sendDataStateManager.battleSendState.Value == SendDataState.OnSent);
+            print("2");
             await UniTask.WaitWhile(() => _screenFader.isFadeOut);
+            print("3");
+
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            print("4");
 
             _screenFader.isFadeIn = true;
             _gameState.SetValueAndForceNotify(GameState.Finished);

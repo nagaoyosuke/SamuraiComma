@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using SamuraiComma.Main.Manager;
@@ -21,7 +22,7 @@ namespace SamuraiComma.Title
 
         private void Start()
         {
-            WSManager.Send(MemberListJson.ToJson());
+            UpdateLobbyPlayerList();
         }
 
         private void UpdateLobbyPlayerList()
@@ -33,8 +34,9 @@ namespace SamuraiComma.Title
             foreach (RectTransform content in onlinePlayerList.transform)
             {
                 //サーバーのメンバーリストの中の名前が１つもunity上のobjectの名前と一致しない場合
-                if (!WSManager.giveMemberList.Value.Member.Any(d => d.userName + "/" + d.userID.ToString() == content.name))
+                if (!WSManager.giveMemberList.Value.Member.Any(d => MojibakeTranslater.ConvertLatinToUtf8(d.userName) + "/" + d.userID.ToString() == content.name))
                 {
+                    //一致しないオブジェクトをdestroy
                     Destroy(content.gameObject);
                 }
             }
@@ -42,15 +44,20 @@ namespace SamuraiComma.Title
             //サーバー上のプレイヤー一覧
             foreach (var m in WSManager.giveMemberList.Value.Member)
             {
+                string userName = MojibakeTranslater.ConvertLatinToUtf8(m.userName);
+                string nickName = MojibakeTranslater.ConvertLatinToUtf8(m.nickName);
+                string streetAddress = MojibakeTranslater.ConvertLatinToUtf8(m.streetAddress);
+
                 //のIDと一致するゲームオブジェクトが存在しない場合、生成する。
-                if (GameObject.Find(m.userName + "/" + m.userID) == null)
+                if (GameObject.Find(userName + "/" + m.userID) == null)
                 {
                     var playerObject = Instantiate(onlinePlayerListContent, transform.position, Quaternion.identity);
 
-                    playerObject.name = m.userName + "/" + m.userID;
+                    playerObject.name = userName + "/" + m.userID;
                     playerObject.transform.SetParent(onlinePlayerList.transform, false);
-                    playerObject.transform.Find("PlayerName").GetComponent<Text>().text = m.userName + " / " + m.streetAddress;
-                    playerObject.GetComponent<UserAccountStatus>().Init(m.userID, m.userName, m.nickName, m.streetAddress);
+
+                    playerObject.transform.Find("PlayerName").GetComponent<Text>().text = userName + " / " + streetAddress;
+                    playerObject.GetComponent<UserAccountStatus>().Init(m.userID, userName, nickName, streetAddress);
                 }
             }
         }
