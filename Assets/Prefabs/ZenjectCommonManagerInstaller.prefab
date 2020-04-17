@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2060432320003784066}
   - component: {fileID: 2060432320003784069}
-  - component: {fileID: 2060432320003784068}
   m_Layer: 0
   m_Name: ZenjectCommonManagerInstaller
   m_TagString: Untagged
@@ -46,15 +45,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveDataManagerPrefab: {fileID: 7600379748275154213, guid: 10e877dfdd48e45e98f721e5376b3f4f,
     type: 3}
---- !u!114 &2060432320003784068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2060432320003784071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 127da9f64a7ef43cebcdc9e5fe31a7e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

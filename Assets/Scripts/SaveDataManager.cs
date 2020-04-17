@@ -15,9 +15,7 @@ namespace SamuraiComma
         private bool _isLoadedSaveData = false;
         private SaveData _saveData;
         public SaveData saveData => _saveData;
-
-        [Inject] private InputFieldProvider _inputFieldProvider;
-
+        
         /// <summary>
         /// 初期化
         /// </summary>
@@ -61,14 +59,17 @@ namespace SamuraiComma
         /// </summary>
         public void SavePlayerDataFromInputField()
         {
-            if (_inputFieldProvider.userNameField.text != null)
-                _saveData.userName = _inputFieldProvider.userNameField.text;
+            //TitleScene以外だとzenjectでとれないのでここで宣言する。
+            InputFieldProvider inputFieldProvider = GameObject.Find("InputField Panel").GetComponent<InputFieldProvider>();
 
-            if (_inputFieldProvider.nicknameField.text != null)
-                _saveData.nickname = _inputFieldProvider.nicknameField.text;
+            if (inputFieldProvider.userNameField.text != null)
+                _saveData.userName = inputFieldProvider.userNameField.text;
 
-            if (_inputFieldProvider.streetAdressField.text != null)
-                _saveData.streetAdress = _inputFieldProvider.streetAdressField.text;
+            if (inputFieldProvider.nicknameField.text != null)
+                _saveData.nickname = inputFieldProvider.nicknameField.text;
+
+            if (inputFieldProvider.streetAdressField.text != null)
+                _saveData.streetAdress = inputFieldProvider.streetAdressField.text;
 
             Save();
         }
