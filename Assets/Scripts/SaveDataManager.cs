@@ -22,8 +22,8 @@ namespace SamuraiComma
         /// </summary>
         private void Awake()
         {
-            //filePath = Application.persistentDataPath + "/" + ".savedata.json";
-            filePath = "/Users/hw17a114/SamuraiComma" + "/" + ".savedata.json";
+            //macosビルド後とunity editor上では動作する。
+            filePath = Application.dataPath + "/" + ".savedata.json";
             _save = new SaveData();
         }
 
