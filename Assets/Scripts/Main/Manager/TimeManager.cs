@@ -34,8 +34,6 @@ namespace SamuraiComma.Main.Manager
         public IReadOnlyReactiveProperty<float> signalTimer => _signalTimer;
         public IReadOnlyReactiveProperty<float> trajectoryTimer => _trajectoryTimer;
 
-        public Text debugText;
-
         private void Start()
         {
             _trajectoryTimer.Value = _trajectoryTimeLimit;
@@ -59,7 +57,6 @@ namespace SamuraiComma.Main.Manager
             while(timer.Value >= 0)
             {
                 timer.Value -= 0.01f;
-                debugText.text = timer.Value.ToString();
                 yield return new WaitForSecondsRealtime(0.01f);
             }
 

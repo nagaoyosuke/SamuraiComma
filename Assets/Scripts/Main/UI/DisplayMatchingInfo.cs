@@ -70,7 +70,7 @@ namespace SamuraiComma.Main.UI
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));//, cancellationToken: token);
             awawa(howa: true);
-            await UniTask.Delay(TimeSpan.FromSeconds(5.0f));//, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(7.0f));//, cancellationToken: token);
             awawa(howa: false);
         }
     }

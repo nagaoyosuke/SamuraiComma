@@ -28,7 +28,7 @@ namespace SamuraiComma.Main.Manager
         private void Awake()
         {
             //セーブデータから自分の情報をもってくる処理。
-            _playerAccount.Init(1, "Unity", "uniuniUnity", "Earth");
+            _playerAccount.Init(4545, "うめはら", "ウメハラ", "Earth");
         }
 
         private void Start()
