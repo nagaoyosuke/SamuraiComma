@@ -68,9 +68,9 @@ namespace SamuraiComma.Main.UI
             _opponentNickName.text = MojibakeTranslater.ConvertLatinToUtf8(_matchingInfo.opponentAccount.nickname);
             _opponentStreetAdress.text = MojibakeTranslater.ConvertLatinToUtf8(_matchingInfo.opponentAccount.streetAdress);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));//, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(1.0f));//, cancellationToken: token);
             awawa(howa: true);
-            await UniTask.Delay(TimeSpan.FromSeconds(7.0f));//, cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(8.0f));//, cancellationToken: token);
             awawa(howa: false);
         }
     }

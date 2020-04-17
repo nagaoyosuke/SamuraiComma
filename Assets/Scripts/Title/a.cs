@@ -2,6 +2,7 @@
 using SamuraiComma.Main.Manager;
 using SamuraiComma.Main.WS;
 using UniRx;
+using Zenject;
 
 namespace SamuraiComma.Title
 {
@@ -11,14 +12,10 @@ namespace SamuraiComma.Title
     public class a : MonoBehaviour
     {
         private bool isMatched = false;
+        [Inject] private SaveDataManager _saveDataManager;
 
         private void Start()
         {
-            var loginJson = new JsonManager.Send.LoginJson(2, "Japanese", "Eglish？", "日本");
-            //var loginJson = new JsonManager.Send.LoginJson(1, "Umehara", "The Comma01", "Japan");
-
-            WSManager.Send(loginJson.ToJson());
-
             WSManager.giveMatching
                      .SkipLatestValueOnSubscribe()
                      .DistinctUntilChanged()

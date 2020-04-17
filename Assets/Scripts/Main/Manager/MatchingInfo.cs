@@ -2,10 +2,9 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
 using UniRx;
 using UniRx.Async;
-
+using SamuraiComma;
 using SamuraiComma.Main.WS;
 using SamuraiComma.Main.Manager;
 using Zenject;
@@ -18,6 +17,7 @@ namespace SamuraiComma.Main.Manager
     public class MatchingInfo : MonoBehaviour
     {
         [Inject] private GameStateManager _gameStateManager;
+        [Inject] private SaveDataManager _saveDataManager;
 
         [SerializeField] private UserAccountStatus _playerAccount;
         [SerializeField] private UserAccountStatus _opponentAccount;
@@ -27,8 +27,7 @@ namespace SamuraiComma.Main.Manager
 
         private void Awake()
         {
-            //セーブデータから自分の情報をもってくる処理。
-            _playerAccount.Init(4545, "うめはら", "ウメハラ", "Earth");
+            _playerAccount.Init(_saveDataManager.save.userID, _saveDataManager.save.userName, _saveDataManager.save.nickname, _saveDataManager.save.streetAdress);
         }
 
         private void Start()
