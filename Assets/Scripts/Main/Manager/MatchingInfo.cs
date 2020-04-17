@@ -27,7 +27,7 @@ namespace SamuraiComma.Main.Manager
 
         private void Awake()
         {
-            _playerAccount.Init(_saveDataManager.save.userID, _saveDataManager.save.userName, _saveDataManager.save.nickname, _saveDataManager.save.streetAdress);
+            _playerAccount.Init(_saveDataManager.saveData.userID, _saveDataManager.saveData.userName, _saveDataManager.saveData.nickname, _saveDataManager.saveData.streetAdress);
         }
 
         private void Start()

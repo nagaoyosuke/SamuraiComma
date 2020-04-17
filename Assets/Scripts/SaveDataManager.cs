@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 using UnityEngine;
 using SamuraiComma.Title;
 using Zenject;
@@ -12,8 +13,8 @@ namespace SamuraiComma
     {
         private string filePath;
         private bool _isLoadedSaveData = false;
-        private SaveData _save;
-        public SaveData save => _save;
+        private SaveData _saveData;
+        public SaveData saveData => _saveData;
 
         [Inject] private InputFieldProvider _inputFieldProvider;
 
@@ -24,7 +25,18 @@ namespace SamuraiComma
         {
             //macosビルド後とunity editor上では動作する。
             filePath = Application.dataPath + "/" + ".savedata.json";
-            _save = new SaveData();
+            _saveData = new SaveData();
+            Load();
+        }
+
+        private void Start()
+        {
+            //サーバーにdbがない場合はこっちで生成する。
+            if (_saveData.userID == 0)
+            {
+                _saveData.userID = GenerateRandomUserID();
+                Save();
+            }
         }
 
         /// <summary>
@@ -36,10 +48,10 @@ namespace SamuraiComma
         /// <param name="streetAdress">Street adress.</param>
         public void SavePlayerData(int userID, string userName, string nickname, string streetAdress)
         {
-            _save.userID = userID;
-            _save.userName = userName;
-            _save.nickname = nickname;
-            _save.streetAdress = streetAdress;
+            _saveData.userID = userID;
+            _saveData.userName = userName;
+            _saveData.nickname = nickname;
+            _saveData.streetAdress = streetAdress;
 
             Save();
         }
@@ -50,15 +62,27 @@ namespace SamuraiComma
         public void SavePlayerDataFromInputField()
         {
             if (_inputFieldProvider.userNameField.text != null)
-                _save.userName = _inputFieldProvider.userNameField.text;
+                _saveData.userName = _inputFieldProvider.userNameField.text;
 
             if (_inputFieldProvider.nicknameField.text != null)
-                _save.nickname = _inputFieldProvider.nicknameField.text;
+                _saveData.nickname = _inputFieldProvider.nicknameField.text;
 
             if (_inputFieldProvider.streetAdressField.text != null)
-                _save.streetAdress = _inputFieldProvider.streetAdressField.text;
+                _saveData.streetAdress = _inputFieldProvider.streetAdressField.text;
 
             Save();
+        }
+
+        private int GenerateRandomUserID()
+        {
+            string userIDString = "";
+
+            for (int i = 0; i <= 7; i++)
+            {
+                userIDString += UnityEngine.Random.Range(0, 10).ToString();
+            }
+
+            return Convert.ToInt32(userIDString);
         }
 
         /// <summary>
@@ -66,7 +90,7 @@ namespace SamuraiComma
         /// </summary>
         private void Save()
         {
-            string json = JsonUtility.ToJson(_save);
+            string json = JsonUtility.ToJson(_saveData);
 
             StreamWriter streamWriter = new StreamWriter(filePath);
             streamWriter.Write(json);
@@ -88,10 +112,9 @@ namespace SamuraiComma
                 string data = streamReader.ReadToEnd();
                 streamReader.Close();
 
-                _save = JsonUtility.FromJson<SaveData>(data);
+                _saveData = JsonUtility.FromJson<SaveData>(data);
                 _isLoadedSaveData = true;
             }
         }
     }
 }
-

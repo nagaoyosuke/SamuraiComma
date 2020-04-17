@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using SamuraiComma.Main.Manager;
 using SamuraiComma.Main.WS;
 using Zenject;
@@ -14,9 +16,9 @@ namespace SamuraiComma.Title
 
         private void Start()
         {
-            _saveDataManager.Load();
-            var loginJson = new JsonManager.Send.LoginJson(_saveDataManager.save.userID, _saveDataManager.save.userName, _saveDataManager.save.nickname, _saveDataManager.save.streetAdress);
+            var loginJson = new JsonManager.Send.LoginJson(_saveDataManager.saveData.userID, _saveDataManager.saveData.userName, _saveDataManager.saveData.nickname, _saveDataManager.saveData.streetAdress);
             WSManager.Send(loginJson.ToJson());
+            print("サーバーにログインしました。");
         }
     }
 }
