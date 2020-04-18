@@ -30,7 +30,6 @@ namespace SamuraiComma.Main.UI
 
         private void Start()
         {
-
             _gameStateManager.CurrentGameState
                              .DistinctUntilChanged()
                              .Where(x => x == GameState.Result)
@@ -42,6 +41,10 @@ namespace SamuraiComma.Main.UI
                                        );
         }
 
+        /// <summary>
+        /// 表示非表示
+        /// </summary>
+        /// <param name="flag">If set to <c>true</c> flag.</param>
         private void SwitchToEnableText(bool flag)
         {
             _matchResulttext.enabled = flag;
@@ -49,6 +52,9 @@ namespace SamuraiComma.Main.UI
             _playerTimeText.enabled = flag;
         }
 
+        /// <summary>
+        /// resultDataTextを更新する。
+        /// </summary>
         private void UpdateResultDataText()
         {
             if (WSManager.giveBattle.Value.isJudge == "Win")
@@ -65,7 +71,7 @@ namespace SamuraiComma.Main.UI
             }
 
             _playerNameText.text = _matchingInfo.playerAccount.UserName;
-            _playerTimeText.text = WSManager.giveBattle.Value.myTime.ToString();
+            _playerTimeText.text = "速度   "+ WSManager.giveBattle.Value.myTime + "秒";
         }
     }
 }
