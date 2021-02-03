@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 using SamuraiComma.Main.Inputs;
 using SamuraiComma.Main.Manager;
 using UniRx;
@@ -24,6 +26,7 @@ namespace SamuraiComma.Main.Player
 
         private BoolReactiveProperty _canBattle = new BoolReactiveProperty(false);
         public IReadOnlyReactiveProperty<bool> canBattle => _canBattle;
+        public Text text;
 
         //仮
         [SerializeField] private TempBattle temp;
@@ -46,6 +49,7 @@ namespace SamuraiComma.Main.Player
                 Sound.PlaySe("syakin");
                 _screenFader.isFadeOutTranslucent = true;
                 temp.setsunaButton.SetActive(true);
+                text.enabled = true;
                 _playerState.canBattle.Value = true;
 
             } else {

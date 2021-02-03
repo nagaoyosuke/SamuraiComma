@@ -7,7 +7,6 @@ using SamuraiComma.Main.Manager;
 using UniRx;
 using UniRx.Async;
 using UniRx.Async.Triggers;
-
 using Zenject;
 
 namespace SamuraiComma.Main.UI
@@ -30,9 +29,12 @@ namespace SamuraiComma.Main.UI
         [Inject] private GameStateManager _gameStateManager;
         [Inject] private MatchingInfo _matchingInfo;
 
+        /// <summary>
+        /// 初期化処理
+        /// </summary>
         private void Awake()
         {
-            awawa(false);
+            ChangeUIState(false);
         }
 
         private void Start()
@@ -47,15 +49,15 @@ namespace SamuraiComma.Main.UI
         }
 
         //仮
-        private void awawa(bool howa)
+        private void ChangeUIState(bool enabled)
         {
-            _playerName.enabled = howa;
-            _playerNickName.enabled = howa;
-            _playerStreetAdress.enabled = howa;
+            _playerName.enabled = enabled;
+            _playerNickName.enabled = enabled;
+            _playerStreetAdress.enabled = enabled;
 
-            _opponentName.enabled = howa;
-            _opponentNickName.enabled = howa;
-            _opponentStreetAdress.enabled = howa;
+            _opponentName.enabled = enabled;
+            _opponentNickName.enabled = enabled;
+            _opponentStreetAdress.enabled = enabled;
         }
 
         private async UniTaskVoid UniAsync()//CancellationToken token)
@@ -69,9 +71,9 @@ namespace SamuraiComma.Main.UI
             _opponentStreetAdress.text = MojibakeTranslater.ConvertLatinToUtf8(_matchingInfo.opponentAccount.streetAdress);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f));//, cancellationToken: token);
-            awawa(howa: true);
+            ChangeUIState(enabled: true);
             await UniTask.Delay(TimeSpan.FromSeconds(8.0f));//, cancellationToken: token);
-            awawa(howa: false);
+            ChangeUIState(enabled: false);
         }
     }
 }
